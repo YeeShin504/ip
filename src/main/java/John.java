@@ -1,3 +1,6 @@
+import java.util.Objects;
+import java.util.Scanner;
+
 public class John {
     public static String linebreak = "_".repeat(100);
 
@@ -12,6 +15,15 @@ public class John {
         System.out.println("Hello! I'm\n" + logo);
         System.out.println("What can I do for you?");
         System.out.println(linebreak);
+
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        while (!input.equals("bye")) {
+            System.out.println(linebreak);
+            System.out.println(input);
+            System.out.println(linebreak);
+            input = scanner.nextLine();
+        }
 
         exit();
     }
