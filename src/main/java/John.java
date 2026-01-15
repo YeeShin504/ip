@@ -25,6 +25,7 @@ public class John {
             input = scanner.nextLine();
         }
 
+        scanner.close();
         exit();
     }
 
