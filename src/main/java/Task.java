@@ -7,6 +7,10 @@ public class Task {
         this.isComplete = false;
     }
 
+    public static Task of(String description) {
+        return new Task(description);
+    }
+
     public String toString() {
         String status = isComplete ? "[X]" : "[ ]";
         return String.format("%s %s", status, description);

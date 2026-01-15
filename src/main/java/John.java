@@ -20,9 +20,11 @@ public class John {
         Scanner scanner = new Scanner(System.in);
         boolean run = true;
         while (run) {
-            String[] input = scanner.nextLine().toLowerCase().split(" ");
+            String[] input = scanner.nextLine().split(" ", 2);
+            String command = input[0].toLowerCase().trim();
+            String argument = input.length > 1 ? input[1] : "";
             linebreak();
-            switch (input[0]) {
+            switch (command) {
                 case "list":
                     printList();
                     break;
@@ -32,21 +34,32 @@ public class John {
                     exit();
                     break;
                 case "mark":
-                    markComplete(input[1]);
+                    markComplete(argument);
                     break;
                 case "unmark":
-                    markIncomplete(input[1]);
+                    markIncomplete(argument);
+                    break;
+                case "todo":
+                    addToList(ToDo.of(argument));
+                    break;
+                case "deadline":
+                    addToList(Deadline.of(argument));
+                    break;
+                case "event":
+                    addToList(Event.of(argument));
                     break;
                 default:
-                    addToList(String.join(" ", input));
+                    addToList(Task.of(String.join(" ", input)));
+                    break;
             }
             linebreak();
         }
     }
 
-    private static void addToList(String input) {
-        tasks.add(new Task(input));
-        System.out.printf("added: %s\n", input);
+    private static void addToList(Task task) {
+        tasks.add(task);
+        System.out.printf("Got it. I've added this task:\n    %s\n", task);
+        System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
     }
 
     private static void printList() {
