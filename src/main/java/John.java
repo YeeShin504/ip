@@ -54,6 +54,9 @@ public class John {
             case "todo":
                 addToList(ToDo.of(argument));
                 break;
+            case "delete":
+                removeFromList(argument);
+                break;
             case "deadline":
                 addToList(Deadline.of(argument));
                 break;
@@ -71,6 +74,22 @@ public class John {
         System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
     }
 
+    private static Task getTask(String taskNum) {
+        int idx = Integer.parseInt(taskNum) - 1;
+        if (idx < 0 || idx >= tasks.size()) {
+            String message = String.format("Invalid task number. Choose a number from 1 to %s inclusive.", tasks.size());
+            throw new JohnException(message);
+        }
+        return tasks.get(idx);
+    }
+
+    private static void removeFromList(String taskNum) {
+        Task task = getTask(taskNum);
+        tasks.remove(task);
+        System.out.printf("Noted. I've removed this task:\n    %s\n", task);
+        System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
+    }
+
     private static void printList() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -79,22 +98,12 @@ public class John {
     }
 
     private static void markComplete(String taskNum) {
-        int idx = Integer.parseInt(taskNum) - 1;
-        if (idx < 0 || idx >= tasks.size()) {
-            System.out.println("Error: Invalid task number");
-            return;
-        }
-        Task task = tasks.get(idx);
+        Task task = getTask(taskNum);
         task.markComplete();
     }
 
     private static void markIncomplete(String taskNum) {
-        int idx = Integer.parseInt(taskNum) - 1;
-        if (idx < 0 || idx >= tasks.size()) {
-            System.out.println("Error: Invalid task number");
-            return;
-        }
-        Task task = tasks.get(idx);
+        Task task = getTask(taskNum);
         task.markIncomplete();
     }
 
