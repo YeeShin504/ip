@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class John {
     private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static boolean run;
 
     public static void main(String[] args) {
         String logo = """
@@ -18,41 +19,49 @@ public class John {
         linebreak();
 
         Scanner scanner = new Scanner(System.in);
-        boolean run = true;
+        run = true;
         while (run) {
-            String[] input = scanner.nextLine().split(" ", 2);
-            String command = input[0].toLowerCase().trim();
-            String argument = input.length > 1 ? input[1] : "";
+            String message = scanner.nextLine();
             linebreak();
-            switch (command) {
-                case "list":
-                    printList();
-                    break;
-                case "bye":
-                    run = false;
-                    scanner.close();
-                    exit();
-                    break;
-                case "mark":
-                    markComplete(argument);
-                    break;
-                case "unmark":
-                    markIncomplete(argument);
-                    break;
-                case "todo":
-                    addToList(ToDo.of(argument));
-                    break;
-                case "deadline":
-                    addToList(Deadline.of(argument));
-                    break;
-                case "event":
-                    addToList(Event.of(argument));
-                    break;
-                default:
-                    addToList(Task.of(String.join(" ", input)));
-                    break;
+            try {
+                eval(message);
+            } catch (JohnException e) {
+                System.out.println(e.getMessage());
             }
             linebreak();
+        }
+        scanner.close();
+    }
+
+    private static void eval(String message) {
+        String[] input = message.split(" ", 2);
+        String command = input[0].toLowerCase().trim();
+        String argument = input.length > 1 ? input[1] : "";
+        switch (command) {
+            case "list":
+                printList();
+                break;
+            case "bye":
+                run = false;
+                exit();
+                break;
+            case "mark":
+                markComplete(argument);
+                break;
+            case "unmark":
+                markIncomplete(argument);
+                break;
+            case "todo":
+                addToList(ToDo.of(argument));
+                break;
+            case "deadline":
+                addToList(Deadline.of(argument));
+                break;
+            case "event":
+                addToList(Event.of(argument));
+                break;
+            default:
+                throw new JohnException("I'm sorry, but I don't know what that means :-(");
         }
     }
 

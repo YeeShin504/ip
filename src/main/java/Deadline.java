@@ -8,18 +8,34 @@ public class Deadline extends Task {
     }
 
     public static Deadline of(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            throw new JohnException("The input of a deadline cannot be empty.");
+        }
         String[] res = input.split("/");
-        StringBuilder description = new StringBuilder();
+        if (res.length > 2) {
+            throw new JohnException("Too many arguments. A deadline should only have a description and a due date.");
+        }
+        String description = "";
         String deadline = "";
         for (String s : res) {
             String[] args = s.split(" ", 2);
             if (args[0].equals("by")) {
-                deadline = args.length > 1 ? args[1] : "";
+                if (!deadline.isEmpty()) {
+                    throw new JohnException("Deadline must not have more than 1 due date.");
+                }
+                deadline = args.length > 1 ? args[1].trim() : "";
             } else {
-                description.append(" ").append(s.trim());
+                description = s.trim();
             }
         }
-        return new Deadline(description.toString().trim(), deadline.trim());
+
+        if (description.isEmpty()) {
+            throw new JohnException("The description of a deadline cannot be empty.");
+        }
+        if (deadline.isEmpty()) {
+            throw new JohnException("The due date cannot be empty. Do you want to create a todo instead?");
+        }
+        return new Deadline(description, deadline);
     }
 
     public String toString() {

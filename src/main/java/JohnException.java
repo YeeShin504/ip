@@ -1,4 +1,11 @@
-package PACKAGE_NAME;
+import java.util.IllegalFormatException;
 
-public class JohnException {
+public class JohnException extends IllegalArgumentException {
+    public JohnException(String message) {
+        super(message);
+    }
+
+    public String getMessage() {
+        return "OOPS!!! " + super.getMessage();
+    }
 }
