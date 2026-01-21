@@ -35,32 +35,32 @@ public class John {
 
     private static void eval(String message) {
         String[] input = message.split(" ", 2);
-        String command = input[0].toLowerCase().trim();
+        Command command = Command.fromString(input[0]);
         String argument = input.length > 1 ? input[1] : "";
         switch (command) {
-            case "list":
+            case LIST:
                 printList();
                 break;
-            case "bye":
+            case BYE:
                 run = false;
                 exit();
                 break;
-            case "mark":
+            case MARK:
                 markComplete(argument);
                 break;
-            case "unmark":
+            case UNMARK:
                 markIncomplete(argument);
                 break;
-            case "todo":
+            case TODO:
                 addToList(ToDo.of(argument));
                 break;
-            case "delete":
+            case DELETE:
                 removeFromList(argument);
                 break;
-            case "deadline":
+            case DEADLINE:
                 addToList(Deadline.of(argument));
                 break;
-            case "event":
+            case EVENT:
                 addToList(Event.of(argument));
                 break;
             default:
@@ -77,7 +77,8 @@ public class John {
     private static Task getTask(String taskNum) {
         int idx = Integer.parseInt(taskNum) - 1;
         if (idx < 0 || idx >= tasks.size()) {
-            String message = String.format("Invalid task number. Choose a number from 1 to %s inclusive.", tasks.size());
+            String message = String.format("Invalid task number. Choose a number from 1 to %s inclusive.",
+                    tasks.size());
             throw new JohnException(message);
         }
         return tasks.get(idx);

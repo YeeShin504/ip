@@ -1,5 +1,3 @@
-import java.util.IllegalFormatException;
-
 public class JohnException extends IllegalArgumentException {
     public JohnException(String message) {
         super(message);
