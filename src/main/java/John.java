@@ -20,7 +20,11 @@ public class John {
         System.out.println("What can I do for you?");
         linebreak();
 
-        loadTasksFromFile();
+        try {
+            loadTasksFromFile();
+        } catch (JohnException e) {
+            System.out.println("Warning: Could not load tasks from file. Starting with an empty task list.");
+        }
 
         Scanner scanner = new Scanner(System.in);
         run = true;
@@ -144,11 +148,13 @@ public class John {
     private static void markComplete(String taskNum) {
         Task task = getTask(taskNum);
         task.markComplete();
+        saveTasksToFile();
     }
 
     private static void markIncomplete(String taskNum) {
         Task task = getTask(taskNum);
         task.markIncomplete();
+        saveTasksToFile();
     }
 
     private static void exit() {
