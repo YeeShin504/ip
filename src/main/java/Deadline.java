@@ -1,13 +1,19 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Deadline extends Task {
-    protected String deadline;
+    private static final DateTimeFormatter IN_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("h:mm a, d MMM yyyy");
 
-    public Deadline(String description, String deadline) {
+    protected LocalDateTime deadline;
+
+    public Deadline(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
     }
 
-    public Deadline(String description, String deadline, boolean isComplete) {
+    public Deadline(String description, LocalDateTime deadline, boolean isComplete) {
         super(description, isComplete);
         this.deadline = deadline;
     }
@@ -16,44 +22,35 @@ public class Deadline extends Task {
         if (input == null || input.trim().isEmpty()) {
             throw new JohnException("The input of a deadline cannot be empty.");
         }
-        String[] res = input.split("/");
+        String[] res = input.split("/by");
         if (res.length > 2) {
             throw new JohnException("Too many arguments. A deadline should only have a description and a due date.");
         }
-        String description = "";
-        String deadline = "";
-        for (String s : res) {
-            String[] args = s.split(" ", 2);
-            if (args[0].equals("by")) {
-                if (!deadline.isEmpty()) {
-                    throw new JohnException("Deadline must not have more than 1 due date.");
-                }
-                deadline = args.length > 1 ? args[1].trim() : "";
-            } else {
-                description = s.trim();
-            }
-        }
-
+        String description = res[0].trim();
         if (description.isEmpty()) {
             throw new JohnException("The description of a deadline cannot be empty.");
         }
-        if (deadline.isEmpty()) {
-            throw new JohnException("The due date cannot be empty. Do you want to create a todo instead?");
+
+        LocalDateTime deadline;
+        try {
+            deadline = LocalDateTime.parse(res[1].trim(), IN_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new JohnException("Invalid date format. Please use the format: d/M/yyyy HHmm");
         }
+
         return new Deadline(description, deadline);
     }
 
     @Override
     public String toString() {
-        return String.format("[D] %s (by: %s)", super.toString(), deadline);
+        return String.format("[D] %s (by: %s)", super.toString(), deadline.format(DISPLAY_FORMATTER));
     }
 
     @Override
     public String toDataString() {
         String status = isComplete ? "1" : "0";
         String escapedDescription = description.replace("|", "\\|");
-        String escapedDeadline = deadline.replace("|", "\\|");
-        return String.format("D | %s | %s | %s\n", status, escapedDescription, escapedDeadline);
+        return String.format("D | %s | %s | %s\n", status, escapedDescription, deadline.toString());
     }
 
     public static Deadline fromDataString(String dataString) {
@@ -63,7 +60,7 @@ public class Deadline extends Task {
         }
         boolean isComplete = parts[1].trim().equals("1");
         String description = parts[2].replace("\\|", "|");
-        String deadline = parts[3].replace("\\|", "|");
+        LocalDateTime deadline = LocalDateTime.parse(parts[3].trim());
         Deadline deadlineTask = new Deadline(description, deadline, isComplete);
         return deadlineTask;
     }

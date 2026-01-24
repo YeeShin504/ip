@@ -20,7 +20,11 @@ public class John {
         System.out.println("What can I do for you?");
         linebreak();
 
-        loadTasksFromFile();
+        try {
+            loadTasksFromFile();
+        } catch (JohnException e) {
+            System.out.println("Warning: Could not load tasks from file. Starting with an empty task list.");
+        }
 
         Scanner scanner = new Scanner(System.in);
         run = true;
