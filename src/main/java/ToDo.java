@@ -7,13 +7,6 @@ public class ToDo extends Task {
         super(description, isComplete);
     }
 
-    public static ToDo of(String description) {
-        if (description.trim().isEmpty()) {
-            throw new JohnException("The description of a todo cannot be empty");
-        }
-        return new ToDo(description);
-    }
-
     @Override
     public String toString() {
         return "[T] " + super.toString();

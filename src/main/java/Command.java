@@ -6,16 +6,13 @@ public enum Command {
     MARK,
     UNMARK,
     LIST,
-    FIND,
-    BYE,
-    HELP;
+    BYE;
 
     public static Command fromString(String command) {
-        for (Command cmd : Command.values()) {
-            if (cmd.name().equals(command.toUpperCase().trim())) {
-                return cmd;
-            }
+        try {
+            return Command.valueOf(command.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new JohnException("I'm sorry, but I don't know what this means: " + command);
         }
-        throw new JohnException("I'm sorry, but I don't know what this means: " + command);
     }
 }
