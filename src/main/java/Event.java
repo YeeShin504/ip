@@ -51,6 +51,9 @@ public class Event extends Task {
         try {
             startDate = LocalDateTime.parse(dateParts[0].trim(), IN_FORMATTER);
             endDate = LocalDateTime.parse(dateParts[1].trim(), IN_FORMATTER);
+            if (endDate.isBefore(startDate)) {
+                throw new JohnException("The end date of an event cannot be before the start date.");
+            }
         } catch (DateTimeParseException e) {
             throw new JohnException("Invalid date format. Please use the format: d/M/yyyy HHmm");
         }
@@ -60,14 +63,16 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return String.format("[E] %s (from: %s to: %s)", super.toString(), startDate.format(DISPLAY_FORMATTER), endDate.format(DISPLAY_FORMATTER));
+        return String.format("[E] %s (from: %s to: %s)", super.toString(), startDate.format(DISPLAY_FORMATTER),
+                endDate.format(DISPLAY_FORMATTER));
     }
 
     @Override
     public String toDataString() {
         String status = isComplete ? "1" : "0";
         String escapedDescription = description.replace("|", "\\|");
-        return String.format("E | %s | %s | %s | %s\n", status, escapedDescription, startDate.toString(), endDate.toString());
+        return String.format("E | %s | %s | %s | %s\n", status, escapedDescription, startDate.toString(),
+                endDate.toString());
     }
 
     public static Event fromDataString(String dataString) {
