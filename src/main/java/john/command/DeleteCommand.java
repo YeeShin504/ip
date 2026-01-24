@@ -1,3 +1,10 @@
+package john.command;
+
+import john.task.Task;
+import john.task.TaskList;
+import john.Ui;
+import john.Storage;
+
 public class DeleteCommand extends CommandBase {
     private static final String REMOVED_MESSAGE = "Noted. I've removed this task:\n    %s\n";
     private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";

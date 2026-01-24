@@ -1,3 +1,7 @@
+package john.command;
+
+import john.JohnException;
+
 public enum Command {
     TODO,
     DEADLINE,

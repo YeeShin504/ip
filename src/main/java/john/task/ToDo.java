@@ -1,3 +1,7 @@
+package john.task;
+
+import john.JohnException;
+
 public class ToDo extends Task {
     public ToDo(String description) {
         super(description);

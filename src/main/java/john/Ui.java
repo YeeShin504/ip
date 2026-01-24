@@ -1,3 +1,7 @@
+package john;
+
+import john.command.CommandBase;
+
 public class Ui {
     private final java.util.Scanner sc = new java.util.Scanner(System.in);
 
@@ -29,7 +33,7 @@ public class Ui {
 
     public CommandBase readCommand() {
         String input = sc.nextLine();
-        return Parser.parse(input);
+        return john.Parser.parse(input);
     }
 
     public void close() {

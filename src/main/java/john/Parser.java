@@ -1,3 +1,7 @@
+package john;
+
+import john.command.*;
+
 public class Parser {
     public static CommandBase parse(String input) {
         String[] parts = input.trim().split(" ", 2);

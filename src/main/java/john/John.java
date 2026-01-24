@@ -1,3 +1,8 @@
+package john;
+
+import john.command.CommandBase;
+import john.task.TaskList;
+
 public class John {
     private Storage storage;
     private TaskList tasks;

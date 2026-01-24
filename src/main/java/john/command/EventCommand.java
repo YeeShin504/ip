@@ -1,10 +1,21 @@
+package john.command;
+
+import john.task.Task;
+import john.task.TaskList;
+import john.task.Event;
+import john.Ui;
+import john.Storage;
+import john.JohnException;
+
 public class EventCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
     private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
     private final String argument;
+
     public EventCommand(String argument) {
         this.argument = argument;
     }
+
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument == null || argument.isEmpty()) {
@@ -28,8 +39,10 @@ public class EventCommand extends CommandBase {
         }
         java.time.LocalDateTime startDate, endDate;
         try {
-            startDate = java.time.LocalDateTime.parse(dateParts[0].trim(), java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-            endDate = java.time.LocalDateTime.parse(dateParts[1].trim(), java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+            startDate = java.time.LocalDateTime.parse(dateParts[0].trim(),
+                    java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+            endDate = java.time.LocalDateTime.parse(dateParts[1].trim(),
+                    java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
             if (endDate.isBefore(startDate)) {
                 throw new JohnException("The end date of an event cannot be before the start date.");
             }

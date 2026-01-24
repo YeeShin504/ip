@@ -1,10 +1,21 @@
+package john.command;
+
+import john.task.Task;
+import john.task.TaskList;
+import john.task.Deadline;
+import john.Ui;
+import john.Storage;
+import john.JohnException;
+
 public class DeadlineCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
     private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
     private final String argument;
+
     public DeadlineCommand(String argument) {
         this.argument = argument;
     }
+
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument == null || argument.trim().isEmpty()) {
@@ -20,7 +31,8 @@ public class DeadlineCommand extends CommandBase {
         }
         java.time.LocalDateTime deadline;
         try {
-            deadline = java.time.LocalDateTime.parse(res[1].trim(), java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+            deadline = java.time.LocalDateTime.parse(res[1].trim(),
+                    java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
         } catch (java.time.format.DateTimeParseException e) {
             throw new JohnException("Invalid date format. Please use the format: d/M/yyyy HHmm");
         }

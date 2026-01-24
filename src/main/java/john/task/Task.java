@@ -1,3 +1,7 @@
+package john.task;
+
+import john.JohnException;
+
 public abstract class Task {
     protected String description;
     protected boolean isComplete = false;
@@ -32,7 +36,7 @@ public abstract class Task {
         }
     }
 
-    protected void markComplete() {
+    public void markComplete() {
         if (isComplete) {
             System.out.println("This task has already been marked as done:");
         } else {
@@ -42,7 +46,7 @@ public abstract class Task {
         }
     }
 
-    protected void markIncomplete() {
+    public void markIncomplete() {
         if (!isComplete) {
             System.out.println("This task has already been marked as not done:");
         } else {

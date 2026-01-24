@@ -1,3 +1,7 @@
+package john;
+
+import john.task.Task;
+import john.task.TaskList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,3 +1,6 @@
+package john.task;
+
+import john.JohnException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,8 @@ public class TaskList {
 
     public Task get(int idx) {
         if (idx < 0 || idx >= tasks.size()) {
-            String message = String.format("Invalid task number. Choose a number from 1 to %s inclusive.", tasks.size());
+            String message = String.format("Invalid task number. Choose a number from 1 to %s inclusive.",
+                    tasks.size());
             throw new JohnException(message);
         }
         return tasks.get(idx);
