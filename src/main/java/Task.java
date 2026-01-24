@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isComplete = false;
 
@@ -7,13 +7,29 @@ public class Task {
         this.isComplete = false;
     }
 
-    public static Task of(String description) {
-        return new Task(description);
+    public Task(String description, boolean isComplete) {
+        this.description = description;
+        this.isComplete = isComplete;
     }
 
+    @Override
     public String toString() {
         String status = isComplete ? "[X]" : "[ ]";
         return String.format("%s %s", status, description);
+    }
+
+    public abstract String toDataString();
+
+    public static Task fromDataString(String dataString) {
+        if (dataString.startsWith("T |")) {
+            return ToDo.fromDataString(dataString);
+        } else if (dataString.startsWith("D |")) {
+            return Deadline.fromDataString(dataString);
+        } else if (dataString.startsWith("E |")) {
+            return Event.fromDataString(dataString);
+        } else {
+            throw new JohnException("Unknown task type in data string: " + dataString);
+        }
     }
 
     protected void markComplete() {

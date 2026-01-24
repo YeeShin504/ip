@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 public class John {
     private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static final String DATA_DIR = "./data";
+    private static final String DATA_FILE = DATA_DIR + "/john.txt";
     private static boolean run;
 
     public static void main(String[] args) {
@@ -17,6 +19,8 @@ public class John {
         System.out.println("Hello! I'm\n" + logo);
         System.out.println("What can I do for you?");
         linebreak();
+
+        loadTasksFromFile();
 
         Scanner scanner = new Scanner(System.in);
         run = true;
@@ -70,6 +74,7 @@ public class John {
 
     private static void addToList(Task task) {
         tasks.add(task);
+        saveTasksToFile();
         System.out.printf("Got it. I've added this task:\n    %s\n", task);
         System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
     }
@@ -87,8 +92,46 @@ public class John {
     private static void removeFromList(String taskNum) {
         Task task = getTask(taskNum);
         tasks.remove(task);
+        saveTasksToFile();
         System.out.printf("Noted. I've removed this task:\n    %s\n", task);
         System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
+    }
+
+    private static void saveTasksToFile() {
+        java.io.File dir = new java.io.File(DATA_DIR);
+        if (!dir.exists()) {
+            boolean created = dir.mkdirs();
+            if (!created) {
+                System.err.println("Warning: Could not create data directory at " + DATA_DIR);
+                return;
+            }
+        }
+
+        try (java.io.FileWriter writer = new java.io.FileWriter(DATA_FILE)) {
+            for (Task task : tasks) {
+                writer.write(task.toDataString());
+            }
+        } catch (java.io.IOException e) {
+            System.err.println("Warning: Could not save tasks to file at " + DATA_FILE);
+        }
+    }
+
+    private static void loadTasksFromFile() {
+        java.io.File file = new java.io.File(DATA_FILE);
+        if (!file.exists()) {
+            // No file to load, nothing to do
+            return;
+        }
+
+        try (java.util.Scanner scanner = new java.util.Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                Task task = Task.fromDataString(line);
+                tasks.add(task);
+            }
+        } catch (java.io.IOException e) {
+            System.err.println("Warning: Could not load tasks from file at " + DATA_FILE);
+        }
     }
 
     private static void printList() {

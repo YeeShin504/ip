@@ -7,6 +7,11 @@ public class Deadline extends Task {
         this.deadline = deadline;
     }
 
+    public Deadline(String description, String deadline, boolean isComplete) {
+        super(description, isComplete);
+        this.deadline = deadline;
+    }
+
     public static Deadline of(String input) {
         if (input == null || input.trim().isEmpty()) {
             throw new JohnException("The input of a deadline cannot be empty.");
@@ -38,7 +43,28 @@ public class Deadline extends Task {
         return new Deadline(description, deadline);
     }
 
+    @Override
     public String toString() {
         return String.format("[D] %s (by: %s)", super.toString(), deadline);
+    }
+
+    @Override
+    public String toDataString() {
+        String status = isComplete ? "1" : "0";
+        String escapedDescription = description.replace("|", "\\|");
+        String escapedDeadline = deadline.replace("|", "\\|");
+        return String.format("D | %s | %s | %s\n", status, escapedDescription, escapedDeadline);
+    }
+
+    public static Deadline fromDataString(String dataString) {
+        String[] parts = dataString.split(" \\| ", 4);
+        if (!parts[0].trim().equals("D")) {
+            throw new JohnException("Data string is not of type Deadline: " + dataString);
+        }
+        boolean isComplete = parts[1].trim().equals("1");
+        String description = parts[2].replace("\\|", "|");
+        String deadline = parts[3].replace("\\|", "|");
+        Deadline deadlineTask = new Deadline(description, deadline, isComplete);
+        return deadlineTask;
     }
 }
