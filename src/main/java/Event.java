@@ -8,6 +8,13 @@ public class Event extends Task {
         this.endDate = endDate;
     }
 
+    public Event(String description, String startDate, String endDate, boolean isComplete) {
+        super(description);
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isComplete = isComplete;
+    }
+
     public static Event of(String input) {
         if (input == null || input.isEmpty()) {
             throw new JohnException("The input of an event cannot be empty.");
@@ -15,7 +22,8 @@ public class Event extends Task {
         ;
         String[] res = input.split("/");
         if (res.length > 3) {
-            throw new JohnException("Too many arguments. An event should only have a description, start date and end date.");
+            throw new JohnException(
+                    "Too many arguments. An event should only have a description, start date and end date.");
         }
         String description = "";
         String startDate = "", endDate = "";
@@ -45,7 +53,8 @@ public class Event extends Task {
         }
         if (startDate.isEmpty()) {
             String option = endDate.isEmpty() ? "task" : "deadline";
-            String message = String.format("The start date cannot be empty. Do you want to create a %s instead?", option);
+            String message = String.format("The start date cannot be empty. Do you want to create a %s instead?",
+                    option);
             throw new JohnException(message);
         }
         if (endDate.isEmpty()) {
@@ -54,7 +63,30 @@ public class Event extends Task {
         return new Event(description, startDate, endDate);
     }
 
+    @Override
     public String toString() {
         return String.format("[E] %s (from: %s to: %s)", super.toString(), startDate, endDate);
+    }
+
+    @Override
+    public String toDataString() {
+        String status = isComplete ? "1" : "0";
+        String escapedDescription = description.replace("|", "\\|");
+        String escapedStartDate = startDate.replace("|", "\\|");
+        String escapedEndDate = endDate.replace("|", "\\|");
+        return String.format("E | %s | %s | %s | %s\n", status, escapedDescription, escapedStartDate, escapedEndDate);
+    }
+
+    public static Event fromDataString(String dataString) {
+        String[] parts = dataString.split(" \\| ", 5);
+        if (!parts[0].trim().equals("E")) {
+            throw new JohnException("Data string is not of type Event: " + dataString);
+        }
+        boolean isComplete = parts[1].trim().equals("1");
+        String description = parts[2].replace("\\|", "|");
+        String startDate = parts[3].replace("\\|", "|");
+        String endDate = parts[4].replace("\\|", "|");
+        Event event = new Event(description, startDate, endDate, isComplete);
+        return event;
     }
 }
