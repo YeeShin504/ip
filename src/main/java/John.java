@@ -144,14 +144,17 @@ public class John {
     private static void markComplete(String taskNum) {
         Task task = getTask(taskNum);
         task.markComplete();
+        saveTasksToFile();
     }
 
     private static void markIncomplete(String taskNum) {
         Task task = getTask(taskNum);
         task.markIncomplete();
+        saveTasksToFile();
     }
 
     private static void exit() {
+        saveTasksToFile();
         System.out.println("Bye. Hope to see you again soon!");
     }
 
