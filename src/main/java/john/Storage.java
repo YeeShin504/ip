@@ -1,12 +1,13 @@
 package john;
 
-import john.task.Task;
-import john.task.TaskList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import john.task.Task;
+import john.task.TaskList;
 
 /**
  * Handles loading and saving of tasks to persistent storage.

@@ -1,11 +1,11 @@
 package john.command;
 
+import john.JohnException;
+import john.Storage;
+import john.Ui;
+import john.task.Deadline;
 import john.task.Task;
 import john.task.TaskList;
-import john.task.Deadline;
-import john.Ui;
-import john.Storage;
-import john.JohnException;
 
 /**
  * Command to add a deadline task to the task list.

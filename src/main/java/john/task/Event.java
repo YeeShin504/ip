@@ -1,8 +1,9 @@
 package john.task;
 
-import john.JohnException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import john.JohnException;
 
 /**
  * Represents an event task with a start and end date.

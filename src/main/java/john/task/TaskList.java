@@ -1,8 +1,9 @@
 package john.task;
 
-import john.JohnException;
 import java.util.ArrayList;
 import java.util.List;
+
+import john.JohnException;
 
 /**
  * Represents a list of tasks and provides operations on them.

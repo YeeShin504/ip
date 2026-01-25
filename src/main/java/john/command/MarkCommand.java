@@ -1,9 +1,9 @@
 package john.command;
 
+import john.Storage;
+import john.Ui;
 import john.task.Task;
 import john.task.TaskList;
-import john.Ui;
-import john.Storage;
 
 /**
  * Command to mark a task as complete.

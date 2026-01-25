@@ -1,10 +1,10 @@
 package john.command;
 
+import john.JohnException;
+import john.Storage;
+import john.Ui;
 import john.task.TaskList;
 import john.task.ToDo;
-import john.Ui;
-import john.Storage;
-import john.JohnException;
 
 /**
  * Command to add a todo task to the task list.

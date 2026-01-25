@@ -1,8 +1,8 @@
 package john.command;
 
-import john.task.TaskList;
-import john.Ui;
 import john.Storage;
+import john.Ui;
+import john.task.TaskList;
 
 /**
  * Command to list all tasks in the task list.

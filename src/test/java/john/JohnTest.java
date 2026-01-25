@@ -1,9 +1,11 @@
 package john;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
 
 import john.task.TaskList;
 
