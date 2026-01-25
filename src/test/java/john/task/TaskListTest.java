@@ -6,7 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import john.JohnException;st.size());
+import john.JohnException;
+
+class TaskListTest {
+    @Test
+    void add_and_get_and_remove() {
+        TaskList list = new TaskList();
+        ToDo todo = new ToDo("read book");
+        list.add(todo);
+        assertEquals(1, list.size());
+        assertEquals(todo, list.get(0));
+        list.remove(todo);
+        assertEquals(0, list.size());
     }
 
     @Test

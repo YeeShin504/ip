@@ -55,8 +55,8 @@ public class Storage {
      * Loads tasks from the storage file.
      * @return A list of tasks loaded from storage
      */
-    public ArrayList<Task> loadTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public TaskList loadTasks() {
+        TaskList tasks = new TaskList();
         File file = new File(dataFile);
         if (!file.exists()) {
             return tasks;

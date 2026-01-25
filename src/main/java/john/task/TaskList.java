@@ -39,18 +39,6 @@ public class TaskList {
         return sb.toString();
     }
 
-    @Override
-    public String toString() {
-        if (tasks.isEmpty()) {
-            return "No tasks found.";
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tasks.size(); i++) {
-            sb.append(String.format("%d. %s\n", i + 1, tasks.get(i)));
-        }
-        return sb.toString();
-    }
-
     /**
      * Adds a task to the list.
      *
