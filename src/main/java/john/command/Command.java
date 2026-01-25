@@ -13,7 +13,8 @@ public enum Command {
     MARK,
     UNMARK,
     LIST,
-    BYE;
+    BYE,
+    FIND;
 
     /**
      * Converts a string to the corresponding Command enum value.

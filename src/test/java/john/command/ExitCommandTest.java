@@ -37,7 +37,7 @@ class ExitCommandTest {
         String output = outContent.toString();
         assertTrue(output.contains("Bye. Hope to see you again soon!"));
 
-        TaskList loadedTasks = new TaskList(storage.loadTasks());
+        TaskList loadedTasks = storage.loadTasks();
         assertTrue(loadedTasks.get(0).toString().contains("[T] [ ] read book"));
         new java.io.File("./data/test_exit_command.txt").delete();
     }

@@ -6,14 +6,12 @@ import john.command.DeadlineCommand;
 import john.command.DeleteCommand;
 import john.command.EventCommand;
 import john.command.ExitCommand;
+import john.command.FindCommand;
 import john.command.ListCommand;
 import john.command.MarkCommand;
 import john.command.TodoCommand;
 import john.command.UnmarkCommand;
 
-/**
- * Parses user input and returns the corresponding command.
- */
 public class Parser {
     /**
      * Parses the user input and returns the appropriate Command object.
@@ -42,6 +40,8 @@ public class Parser {
                 return new DeadlineCommand(argument);
             case EVENT:
                 return new EventCommand(argument);
+            case FIND:
+                return new FindCommand(argument);
         }
         throw new JohnException("I'm sorry, but I don't know what this means: " + input);
     }
