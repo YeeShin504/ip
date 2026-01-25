@@ -7,15 +7,32 @@ import john.Ui;
 import john.Storage;
 import john.JohnException;
 
+/**
+ * Command to add an event task to the task list.
+ */
 public class EventCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
     private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
     private final String argument;
 
+    /**
+     * Constructs an EventCommand with the specified argument.
+     * 
+     * @param argument The argument string containing description, start, and end
+     *                 date
+     */
     public EventCommand(String argument) {
         this.argument = argument;
     }
 
+    /**
+     * Executes the event command, adding an event task to the list.
+     *
+     * @param tasks   The task list to add the event to
+     * @param ui      The user interface for displaying messages
+     * @param storage The storage handler for saving tasks
+     * @throws JohnException if the argument is invalid or date parsing fails
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument == null || argument.isEmpty()) {

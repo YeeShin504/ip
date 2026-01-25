@@ -7,15 +7,31 @@ import john.Ui;
 import john.Storage;
 import john.JohnException;
 
+/**
+ * Command to add a deadline task to the task list.
+ */
 public class DeadlineCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
     private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
     private final String argument;
 
+    /**
+     * Constructs a DeadlineCommand with the specified argument.
+     * 
+     * @param argument The argument string containing description and due date
+     */
     public DeadlineCommand(String argument) {
         this.argument = argument;
     }
 
+    /**
+     * Executes the deadline command, adding a deadline task to the list.
+     *
+     * @param tasks   The task list to add the deadline to
+     * @param ui      The user interface for displaying messages
+     * @param storage The storage handler for saving tasks
+     * @throws JohnException if the argument is invalid or date parsing fails
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument == null || argument.trim().isEmpty()) {

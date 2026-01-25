@@ -4,18 +4,34 @@ import john.JohnException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an event task with a start and end date.
+ */
 public class Event extends Task {
     private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("h:mm a, d MMM yyyy");
 
     protected LocalDateTime startDate;
     protected LocalDateTime endDate;
 
+    /**
+     * Constructs an Event task with the given description, start date, and end date.
+     * @param description The task description
+     * @param startDate The start date and time
+     * @param endDate The end date and time
+     */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate) {
         super(description);
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
+    /**
+     * Constructs an Event task with the given description, start date, end date, and completion status.
+     * @param description The task description
+     * @param startDate The start date and time
+     * @param endDate The end date and time
+     * @param isComplete Whether the task is complete
+     */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate, boolean isComplete) {
         super(description);
         this.startDate = startDate;
@@ -37,6 +53,13 @@ public class Event extends Task {
                 endDate.toString());
     }
 
+    /**
+     * Creates an Event object from a data string.
+     *
+     * @param dataString The data string
+     * @return The Event object
+     * @throws JohnException if the data string is invalid
+     */
     public static Event fromDataString(String dataString) {
         String[] parts = dataString.split(" \\| ", 5);
         if (!parts[0].trim().equals("E")) {

@@ -4,7 +4,13 @@ import john.task.TaskList;
 import john.Ui;
 import john.Storage;
 
+/**
+ * Command to list all tasks in the task list.
+ */
 public class ListCommand extends CommandBase {
+    /**
+     * Executes the list command, displaying all tasks.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         System.out.println("Here are the tasks in your list:");

@@ -2,11 +2,23 @@ package john.task;
 
 import john.JohnException;
 
+/**
+ * Represents a todo task.
+ */
 public class ToDo extends Task {
+    /**
+     * Constructs a ToDo task with the given description.
+     * @param description The task description
+     */
     public ToDo(String description) {
         super(description);
     }
 
+    /**
+     * Constructs a ToDo task with the given description and completion status.
+     * @param description The task description
+     * @param isComplete Whether the task is complete
+     */
     public ToDo(String description, boolean isComplete) {
         super(description, isComplete);
     }
@@ -23,6 +35,13 @@ public class ToDo extends Task {
         return String.format("T | %s | %s\n", status, escapedDescription);
     }
 
+    /**
+     * Creates a ToDo object from a data string.
+     *
+     * @param dataString The data string
+     * @return The ToDo object
+     * @throws JohnException if the data string is invalid
+     */
     public static ToDo fromDataString(String dataString) {
         String[] parts = dataString.split(" \\| ", 3);
         if (!parts[0].trim().equals("T")) {

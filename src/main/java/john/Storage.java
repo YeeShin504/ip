@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles loading and saving of tasks to persistent storage.
+ */
 public class Storage {
     public static final String DEFAULT_DATA_DIR = "./data";
     public static final String DEFAULT_DATA_FILE = DEFAULT_DATA_DIR + "/john.txt";
@@ -15,12 +18,20 @@ public class Storage {
     private final String dataDir;
     private final String dataFile;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     * @param filePath The path to the storage file
+     */
     public Storage(String filePath) {
         File file = new File(filePath);
         this.dataDir = file.getParent();
         this.dataFile = filePath;
     }
 
+    /**
+     * Saves the list of tasks to the storage file.
+     * @param taskList The TaskList to save
+     */
     public void saveTasks(TaskList taskList) {
         File dir = new File(dataDir);
         if (!dir.exists()) {
@@ -39,6 +50,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * @return A list of tasks loaded from storage
+     */
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(dataFile);

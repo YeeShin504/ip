@@ -2,15 +2,27 @@ package john.task;
 
 import john.JohnException;
 
+/**
+ * Abstract base class representing a task.
+ */
 public abstract class Task {
     protected String description;
     protected boolean isComplete = false;
 
+    /**
+     * Constructs a Task with the given description.
+     * @param description The task description
+     */
     public Task(String description) {
         this.description = description;
         this.isComplete = false;
     }
 
+    /**
+     * Constructs a Task with the given description and completion status.
+     * @param description The task description
+     * @param isComplete Whether the task is complete
+     */
     public Task(String description, boolean isComplete) {
         this.description = description;
         this.isComplete = isComplete;
@@ -22,8 +34,20 @@ public abstract class Task {
         return String.format("%s %s", status, description);
     }
 
+    /**
+     * Returns a string representation of the task for data storage.
+     *
+     * @return The data string
+     */
     public abstract String toDataString();
 
+    /**
+     * Creates a Task object from a data string.
+     *
+     * @param dataString The data string
+     * @return The Task object
+     * @throws JohnException if the data string is invalid
+     */
     public static Task fromDataString(String dataString) {
         if (dataString.startsWith("T |")) {
             return ToDo.fromDataString(dataString);
@@ -36,6 +60,9 @@ public abstract class Task {
         }
     }
 
+    /**
+     * Marks the task as complete and displays a message.
+     */
     public void markComplete() {
         if (isComplete) {
             System.out.println("This task has already been marked as done:");
@@ -46,6 +73,9 @@ public abstract class Task {
         }
     }
 
+    /**
+     * Marks the task as incomplete and displays a message.
+     */
     public void markIncomplete() {
         if (!isComplete) {
             System.out.println("This task has already been marked as not done:");

@@ -8,6 +8,10 @@ public class John {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs a new John application instance.
+     * @param filePath Path to the data file for storage
+     */
     public John(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -19,6 +23,9 @@ public class John {
         }
     }
 
+    /**
+     * Runs the main program loop for John.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -37,6 +44,10 @@ public class John {
         ui.close();
     }
 
+    /**
+     * Main method to start the John application.
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         new John("data/john.txt").run();
     }

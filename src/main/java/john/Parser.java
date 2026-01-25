@@ -2,7 +2,16 @@ package john;
 
 import john.command.*;
 
+/**
+ * Parses user input and returns the corresponding command.
+ */
 public class Parser {
+    /**
+     * Parses the user input and returns the appropriate Command object.
+     * @param input The user input string
+     * @return The corresponding CommandBase object
+     * @throws JohnException if the input is invalid
+     */
     public static CommandBase parse(String input) {
         String[] parts = input.trim().split(" ", 2);
         String argument = parts.length > 1 ? parts[1] : "";
