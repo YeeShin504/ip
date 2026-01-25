@@ -1,11 +1,10 @@
 package john.task;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;.api.Test;
+
 import john.JohnException;
-import java.util.Arrays;
 
 class TaskListTest {
     @Test
@@ -30,7 +29,9 @@ class TaskListTest {
     void getAll_returnsAllTasks() {
         ToDo t1 = new ToDo("a");
         ToDo t2 = new ToDo("b");
-        TaskList list = new TaskList(Arrays.asList(t1, t2));
+        TaskList list = new TaskList();
+        list.add(t1);
+        list.add(t2);
         assertEquals(2, list.getAll().size());
         assertTrue(list.getAll().contains(t1));
         assertTrue(list.getAll().contains(t2));

@@ -1,10 +1,10 @@
 package john.command;
 
+import john.JohnException;
+import john.Storage;
+import john.Ui;
 import john.task.TaskList;
 import john.task.ToDo;
-import john.Ui;
-import john.Storage;
-import john.JohnException;
 
 public class TodoCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";

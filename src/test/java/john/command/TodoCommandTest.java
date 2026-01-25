@@ -1,17 +1,20 @@
 package john.command;
 
-import john.task.TaskList;
-import john.task.ToDo;
-import john.Ui;
-import john.Storage;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import john.JohnException;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import john.JohnException;
+import john.Storage;
+import john.Ui;
+import john.task.TaskList;
+import john.task.ToDo;
 
 class TodoCommandTest {
     private TaskList tasks;

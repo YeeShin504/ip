@@ -1,9 +1,10 @@
 package john;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
-import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
 
 import john.task.TaskList;
 
@@ -12,7 +13,7 @@ class JohnTest {
     void johnConstructor_loadsTasksSuccessfully() {
         String testFile = "./data/test_john_constructor.txt";
         Storage storage = new Storage(testFile);
-        storage.saveTasks(new TaskList(Collections.emptyList()));
+        storage.saveTasks(new TaskList());
         John john = new John(testFile);
         assertNotNull(john);
         new File(testFile).delete();

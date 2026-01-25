@@ -1,10 +1,8 @@
 package john.command;
 
-import john.task.Task;
-import john.task.TaskList;
 import john.Ui;
-
-import java.util.List;
+import john.command.CommandBase;
+import john.task.TaskList;
 
 public class FindCommand extends CommandBase {
     private final String keyword;

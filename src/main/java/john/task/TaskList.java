@@ -1,7 +1,6 @@
 package john.task;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import john.JohnException;
 
@@ -12,7 +11,7 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    public TaskList(List<Task> tasks) {
+    public TaskList(ArrayList<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
     }
 
@@ -62,7 +61,7 @@ public class TaskList {
     public TaskList findTasksByKeyword(String keyword) {
         TaskList result = new TaskList();
         for (Task task : this.tasks) {
-            if (task.getDescription().contains(keyword)) {
+            if (task.description.contains(keyword)) {
                 result.add(task);
             }
         }

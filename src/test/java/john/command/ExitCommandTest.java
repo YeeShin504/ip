@@ -1,13 +1,16 @@
 package john.command;
 
-import john.task.TaskList;
-import john.Ui;
-import john.Storage;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import john.Storage;
+import john.Ui;
+import john.task.TaskList;
 
 class ExitCommandTest {
     private TaskList tasks;
@@ -34,7 +37,7 @@ class ExitCommandTest {
         String output = outContent.toString();
         assertTrue(output.contains("Bye. Hope to see you again soon!"));
 
-        TaskList loadedTasks = new TaskList(storage.loadTasks());
+        TaskList loadedTasks = storage.loadTasks();
         assertTrue(loadedTasks.get(0).toString().contains("[T] [ ] read book"));
         new java.io.File("./data/test_exit_command.txt").delete();
     }

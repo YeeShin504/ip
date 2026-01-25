@@ -1,12 +1,12 @@
 package john;
 
-import john.task.Task;
-import john.task.TaskList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import john.task.Task;
+import john.task.TaskList;
 
 public class Storage {
     public static final String DEFAULT_DATA_DIR = "./data";
@@ -39,8 +39,8 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> loadTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public TaskList loadTasks() {
+        TaskList tasks = new TaskList();
         File file = new File(dataFile);
         if (!file.exists()) {
             return tasks;

@@ -1,6 +1,16 @@
 package john;
 
-import john.command.*;
+import john.command.Command;
+import john.command.CommandBase;
+import john.command.DeadlineCommand;
+import john.command.DeleteCommand;
+import john.command.EventCommand;
+import john.command.ExitCommand;
+import john.command.ListCommand;
+import john.command.MarkCommand;
+import john.command.TodoCommand;
+import john.command.UnmarkCommand;
+import main.java.john.command.FindCommand;
 
 public class Parser {
     public static CommandBase parse(String input) {

@@ -12,7 +12,7 @@ public class John {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
-            tasks = new TaskList(storage.loadTasks());
+            tasks = storage.loadTasks();
         } catch (Exception e) {
             ui.showLoadingError();
             tasks = new TaskList();

@@ -1,8 +1,9 @@
 package john.task;
 
-import john.JohnException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import john.JohnException;
 
 public class Event extends Task {
     private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("h:mm a, d MMM yyyy");
