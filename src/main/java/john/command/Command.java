@@ -10,7 +10,8 @@ public enum Command {
     MARK,
     UNMARK,
     LIST,
-    BYE;
+    BYE,
+    FIND;
 
     public static Command fromString(String command) {
         try {

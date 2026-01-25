@@ -24,6 +24,8 @@ public class Parser {
                 return new DeadlineCommand(argument);
             case EVENT:
                 return new EventCommand(argument);
+            case FIND:
+                return new FindCommand(argument);
         }
         throw new JohnException("I'm sorry, but I don't know what this means: " + input);
     }
