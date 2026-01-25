@@ -1,0 +1,47 @@
+package john.command;
+
+import john.task.TaskList;
+import john.Ui;
+import john.Storage;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+class ExitCommandTest {
+    private TaskList tasks;
+    private Ui ui;
+    private Storage storage;
+    private ByteArrayOutputStream outContent;
+
+    @BeforeEach
+    void setUp() {
+        tasks = new TaskList();
+        ui = new Ui();
+        storage = new Storage("./data/test_exit_command.txt");
+        outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @Test
+    void execute_printsGoodbyeAndSavesTasks() {
+        TodoCommand todo = new TodoCommand("read book");
+        todo.execute(tasks, ui, storage);
+
+        ExitCommand cmd = new ExitCommand();
+        cmd.execute(tasks, ui, storage);
+        String output = outContent.toString();
+        assertTrue(output.contains("Bye. Hope to see you again soon!"));
+
+        TaskList loadedTasks = new TaskList(storage.loadTasks());
+        assertTrue(loadedTasks.get(0).toString().contains("[T] [ ] read book"));
+        new java.io.File("./data/test_exit_command.txt").delete();
+    }
+
+    @Test
+    void isExit_returnsTrue() {
+        ExitCommand cmd = new ExitCommand();
+        assertTrue(cmd.isExit());
+    }
+}
