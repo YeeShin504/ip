@@ -1,9 +1,9 @@
 package john.command;
 
+import john.Storage;
+import john.Ui;
 import john.task.Task;
 import john.task.TaskList;
-import john.Ui;
-import john.Storage;
 
 public class AddCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";

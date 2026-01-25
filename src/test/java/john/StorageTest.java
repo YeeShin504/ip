@@ -1,14 +1,15 @@
 package john;
 
-import john.task.TaskList;
-import john.task.Task;
-import john.task.ToDo;
-import org.junit.jupiter.api.Test;
-import java.util.Collections;
-import java.util.Arrays;
-import java.io.File;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
+
+import john.task.TaskList;
+import john.task.ToDo;
 
 class StorageTest {
     @Test

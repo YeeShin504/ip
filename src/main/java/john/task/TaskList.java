@@ -1,8 +1,9 @@
 package john.task;
 
-import john.JohnException;
 import java.util.ArrayList;
 import java.util.List;
+
+import john.JohnException;
 
 public class TaskList {
     private final ArrayList<Task> tasks;
