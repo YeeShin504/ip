@@ -11,6 +11,7 @@ public abstract class Task {
 
     /**
      * Constructs a Task with the given description.
+     *
      * @param description The task description
      */
     public Task(String description) {
@@ -20,8 +21,9 @@ public abstract class Task {
 
     /**
      * Constructs a Task with the given description and completion status.
+     *
      * @param description The task description
-     * @param isComplete Whether the task is complete
+     * @param isComplete  Whether the task is complete
      */
     public Task(String description, boolean isComplete) {
         this.description = description;

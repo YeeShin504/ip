@@ -32,8 +32,8 @@ class EventTest {
 
     @Test
     void fromDataString_invalidType_throws() {
-        Exception e = assertThrows(john.JohnException.class,
-                () -> Event.fromDataString("X | 0 | something | 2026-02-11T23:59 | 2026-11-02T00:00"));
+        String s = "X | 0 | something | 2026-02-11T23:59 | 2026-11-02T00:00";
+        Exception e = assertThrows(john.JohnException.class, () -> Event.fromDataString(s));
         assertTrue(e.getMessage().contains("Data string is not of type Event"));
     }
 }

@@ -1,5 +1,6 @@
 package john.command;
 
+import john.JohnException;
 import john.Storage;
 import john.Ui;
 import john.task.Task;
@@ -13,7 +14,7 @@ public class UnmarkCommand extends CommandBase {
 
     /**
      * Constructs an UnmarkCommand for the specified task number.
-     * 
+     *
      * @param taskNum The task number to mark as incomplete
      */
     public UnmarkCommand(String taskNum) {

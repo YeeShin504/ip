@@ -41,6 +41,7 @@ public class Ui {
 
     /**
      * Shows an error message to the user.
+     *
      * @param message The error message to display
      */
     public void showError(String message) {
@@ -49,6 +50,7 @@ public class Ui {
 
     /**
      * Reads a command from the user input.
+     *
      * @return The parsed CommandBase object
      */
     public CommandBase readCommand() {

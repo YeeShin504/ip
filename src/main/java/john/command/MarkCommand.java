@@ -13,7 +13,7 @@ public class MarkCommand extends CommandBase {
 
     /**
      * Constructs a MarkCommand for the specified task number.
-     * 
+     *
      * @param taskNum The task number to mark as complete
      */
     public MarkCommand(String taskNum) {

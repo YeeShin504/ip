@@ -39,8 +39,9 @@ class StorageTest {
     void loadTasks_missingFile_returnsEmptyList() {
         String testFile = "./data/nonexistent_storage.txt";
         File file = new File(testFile);
-        if (file.exists())
+        if (file.exists()) {
             file.delete();
+        }
         Storage storage = new Storage(testFile);
         TaskList loaded = storage.loadTasks();
         assertEquals(0, loaded.size());

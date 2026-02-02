@@ -18,6 +18,7 @@ public enum Command {
 
     /**
      * Converts a string to the corresponding Command enum value.
+     *
      * @param command The command string
      * @return The corresponding Command enum value
      * @throws JohnException if the command is unknown

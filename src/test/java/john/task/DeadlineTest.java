@@ -28,8 +28,8 @@ class DeadlineTest {
 
     @Test
     void fromDataString_invalidType_throws() {
-        Exception e = assertThrows(john.JohnException.class,
-                () -> Deadline.fromDataString("X | 0 | something | 2026-11-02T19:30"));
+        String s = "X | 0 | something | 2026-11-02T19:30";
+        Exception e = assertThrows(john.JohnException.class, () -> Deadline.fromDataString(s));
         assertTrue(e.getMessage().contains("Data string is not of type Deadline"));
     }
 }

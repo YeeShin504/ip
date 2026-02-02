@@ -20,7 +20,7 @@ public class TaskList {
 
     /**
      * Constructs a TaskList from an existing list of tasks.
-     * 
+     *
      * @param tasks The list of tasks
      */
     public TaskList(List<Task> tasks) {
@@ -93,7 +93,7 @@ public class TaskList {
 
     /**
      * Returns a list of tasks whose descriptions contain the given keyword.
-     * 
+     *
      * @param keyword The keyword to search for.
      * @return List of matching tasks.
      */

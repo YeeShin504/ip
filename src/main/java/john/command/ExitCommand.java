@@ -19,7 +19,7 @@ public class ExitCommand extends CommandBase {
 
     /**
      * Indicates that this command will exit the application.
-     * 
+     *
      * @return true
      */
     @Override

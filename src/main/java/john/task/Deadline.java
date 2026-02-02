@@ -15,8 +15,9 @@ public class Deadline extends Task {
 
     /**
      * Constructs a Deadline task with the given description and deadline.
+     *
      * @param description The task description
-     * @param deadline The deadline date and time
+     * @param deadline    The deadline date and time
      */
     public Deadline(String description, LocalDateTime deadline) {
         super(description);
@@ -24,10 +25,12 @@ public class Deadline extends Task {
     }
 
     /**
-     * Constructs a Deadline task with the given description, deadline, and completion status.
+     * Constructs a Deadline task with the given description, deadline, and
+     * completion status.
+     *
      * @param description The task description
-     * @param deadline The deadline date and time
-     * @param isComplete Whether the task is complete
+     * @param deadline    The deadline date and time
+     * @param isComplete  Whether the task is complete
      */
     public Deadline(String description, LocalDateTime deadline, boolean isComplete) {
         super(description, isComplete);

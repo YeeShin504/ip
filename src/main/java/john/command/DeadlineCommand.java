@@ -17,7 +17,7 @@ public class DeadlineCommand extends CommandBase {
 
     /**
      * Constructs a DeadlineCommand with the specified argument.
-     * 
+     *
      * @param argument The argument string containing description and due date
      */
     public DeadlineCommand(String argument) {

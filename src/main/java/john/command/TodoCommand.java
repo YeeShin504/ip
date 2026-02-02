@@ -16,7 +16,7 @@ public class TodoCommand extends CommandBase {
 
     /**
      * Constructs a TodoCommand with the specified argument.
-     * 
+     *
      * @param argument The description of the todo task
      */
     public TodoCommand(String argument) {
