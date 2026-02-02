@@ -3,7 +3,6 @@ package john;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import john.task.Task;
@@ -21,6 +20,7 @@ public class Storage {
 
     /**
      * Constructs a Storage object with the specified file path.
+     *
      * @param filePath The path to the storage file
      */
     public Storage(String filePath) {
@@ -31,6 +31,7 @@ public class Storage {
 
     /**
      * Saves the list of tasks to the storage file.
+     *
      * @param taskList The TaskList to save
      */
     public void saveTasks(TaskList taskList) {
@@ -53,6 +54,7 @@ public class Storage {
 
     /**
      * Loads tasks from the storage file.
+     *
      * @return A list of tasks loaded from storage
      */
     public TaskList loadTasks() {

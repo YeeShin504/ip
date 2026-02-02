@@ -6,6 +6,7 @@ package john;
 public class JohnException extends IllegalArgumentException {
     /**
      * Constructs a new JohnException with the specified detail message.
+     *
      * @param message the detail message
      */
     public JohnException(String message) {
@@ -14,6 +15,7 @@ public class JohnException extends IllegalArgumentException {
 
     /**
      * Returns the error message with a custom prefix.
+     *
      * @return the error message
      */
     public String getMessage() {

@@ -1,5 +1,6 @@
 package john.command;
 
+import john.JohnException;
 import john.Storage;
 import john.Ui;
 import john.task.Task;
@@ -15,7 +16,7 @@ public class DeleteCommand extends CommandBase {
 
     /**
      * Constructs a DeleteCommand for the specified task number.
-     * 
+     *
      * @param taskNum The task number to delete
      */
     public DeleteCommand(String taskNum) {

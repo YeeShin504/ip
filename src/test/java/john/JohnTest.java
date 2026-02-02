@@ -6,8 +6,6 @@ import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.Test;
-
 import john.task.TaskList;
 
 class JohnTest {
@@ -25,8 +23,9 @@ class JohnTest {
     void johnConstructor_handlesMissingFile() {
         String testFile = "./data/nonexistent_file.txt";
         File file = new File(testFile);
-        if (file.exists())
+        if (file.exists()) {
             file.delete();
+        }
         John john = new John(testFile);
         assertNotNull(john);
     }

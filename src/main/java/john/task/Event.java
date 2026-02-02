@@ -15,10 +15,12 @@ public class Event extends Task {
     protected LocalDateTime endDate;
 
     /**
-     * Constructs an Event task with the given description, start date, and end date.
+     * Constructs an Event task with the given description, start date, and end
+     * date.
+     *
      * @param description The task description
-     * @param startDate The start date and time
-     * @param endDate The end date and time
+     * @param startDate   The start date and time
+     * @param endDate     The end date and time
      */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate) {
         super(description);
@@ -27,11 +29,13 @@ public class Event extends Task {
     }
 
     /**
-     * Constructs an Event task with the given description, start date, end date, and completion status.
+     * Constructs an Event task with the given description, start date, end date,
+     * and completion status.
+     *
      * @param description The task description
-     * @param startDate The start date and time
-     * @param endDate The end date and time
-     * @param isComplete Whether the task is complete
+     * @param startDate   The start date and time
+     * @param endDate     The end date and time
+     * @param isComplete  Whether the task is complete
      */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate, boolean isComplete) {
         super(description);

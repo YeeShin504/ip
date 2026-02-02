@@ -10,7 +10,7 @@ import john.JohnException;
 
 class TaskListTest {
     @Test
-    void add_and_get_and_remove() {
+    void addTask_shouldBeRetrievableAndRemovable() {
         TaskList list = new TaskList();
         ToDo todo = new ToDo("read book");
         list.add(todo);

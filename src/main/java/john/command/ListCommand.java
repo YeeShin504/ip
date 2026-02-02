@@ -10,6 +10,10 @@ import john.task.TaskList;
 public class ListCommand extends CommandBase {
     /**
      * Executes the list command, displaying all tasks.
+     *
+     * @param tasks   The task list containing the task to mark
+     * @param ui      The user interface for displaying messages
+     * @param storage The storage handler for saving tasks
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {

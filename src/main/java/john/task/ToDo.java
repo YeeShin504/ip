@@ -8,6 +8,7 @@ import john.JohnException;
 public class ToDo extends Task {
     /**
      * Constructs a ToDo task with the given description.
+     *
      * @param description The task description
      */
     public ToDo(String description) {
@@ -16,8 +17,9 @@ public class ToDo extends Task {
 
     /**
      * Constructs a ToDo task with the given description and completion status.
+     *
      * @param description The task description
-     * @param isComplete Whether the task is complete
+     * @param isComplete  Whether the task is complete
      */
     public ToDo(String description, boolean isComplete) {
         super(description, isComplete);

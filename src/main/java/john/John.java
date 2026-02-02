@@ -3,6 +3,9 @@ package john;
 import john.command.CommandBase;
 import john.task.TaskList;
 
+/**
+ * The main class for the John application.
+ */
 public class John {
     private Storage storage;
     private TaskList tasks;
@@ -10,6 +13,7 @@ public class John {
 
     /**
      * Constructs a new John application instance.
+     *
      * @param filePath Path to the data file for storage
      */
     public John(String filePath) {
@@ -46,6 +50,7 @@ public class John {
 
     /**
      * Main method to start the John application.
+     *
      * @param args Command line arguments
      */
     public static void main(String[] args) {

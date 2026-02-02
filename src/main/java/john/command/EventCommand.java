@@ -17,7 +17,7 @@ public class EventCommand extends CommandBase {
 
     /**
      * Constructs an EventCommand with the specified argument.
-     * 
+     *
      * @param argument The argument string containing description, start, and end
      *                 date
      */
@@ -54,7 +54,8 @@ public class EventCommand extends CommandBase {
         } else if (dateParts.length > 2) {
             throw new JohnException("Too many arguments. An event should only have an end date.");
         }
-        java.time.LocalDateTime startDate, endDate;
+        java.time.LocalDateTime startDate;
+        java.time.LocalDateTime endDate;
         try {
             startDate = java.time.LocalDateTime.parse(dateParts[0].trim(),
                     java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
