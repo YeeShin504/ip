@@ -6,6 +6,7 @@ import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
+import john.storage.Storage;
 import john.task.TaskList;
 import john.task.ToDo;
 

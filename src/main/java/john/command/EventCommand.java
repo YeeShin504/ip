@@ -1,11 +1,11 @@
 package john.command;
 
 import john.JohnException;
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.Event;
 import john.task.Task;
 import john.task.TaskList;
+import john.ui.Ui;
 
 /**
  * Command to add an event task to the task list.
@@ -26,15 +26,16 @@ public class EventCommand extends CommandBase {
     }
 
     /**
-     * Executes the event command, adding an event task to the list.
+     * Executes the event command and returns the response string.
      *
      * @param tasks   The task list to add the event to
      * @param ui      The user interface for displaying messages
      * @param storage The storage handler for saving tasks
+     * @return The response string
      * @throws JohnException if the argument is invalid or date parsing fails
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument == null || argument.isEmpty()) {
             throw new JohnException("The input of an event cannot be empty.");
         }
@@ -70,7 +71,6 @@ public class EventCommand extends CommandBase {
         Task task = new Event(description, startDate, endDate);
         tasks.add(task);
         storage.saveTasks(tasks);
-        System.out.printf(ADDED_MESSAGE, task);
-        System.out.printf(COUNT_MESSAGE, tasks.size());
+        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
     }
 }

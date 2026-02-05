@@ -8,9 +8,9 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
+import john.ui.Ui;
 
 class ExitCommandTest {
     private TaskList tasks;
@@ -33,9 +33,8 @@ class ExitCommandTest {
         todo.execute(tasks, ui, storage);
 
         ExitCommand cmd = new ExitCommand();
-        cmd.execute(tasks, ui, storage);
-        String output = outContent.toString();
-        assertTrue(output.contains("Bye. Hope to see you again soon!"));
+        String response = cmd.execute(tasks, ui, storage);
+        assertTrue(response.contains("Bye. Hope to see you again soon!"));
 
         TaskList loadedTasks = storage.loadTasks();
         assertTrue(loadedTasks.get(0).toString().contains("[T] [ ] read book"));

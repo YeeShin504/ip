@@ -1,9 +1,9 @@
 package john.command;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.Task;
 import john.task.TaskList;
+import john.ui.Ui;
 
 /**
  * Command to add a new task to the task list.
@@ -23,17 +23,17 @@ public class AddCommand extends CommandBase {
     }
 
     /**
-     * Executes the add command, adding the task to the list and saving it.
+     * Executes the add command and returns the response string.
      *
      * @param tasks   The task list to add the task to
      * @param ui      The user interface for displaying messages
      * @param storage The storage handler for saving tasks
+     * @return The response string
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.add(task);
         storage.saveTasks(tasks);
-        System.out.printf(ADDED_MESSAGE, task);
-        System.out.printf(COUNT_MESSAGE, tasks.size());
+        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
     }
 }

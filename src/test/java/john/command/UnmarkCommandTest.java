@@ -8,10 +8,10 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
 import john.task.ToDo;
+import john.ui.Ui;
 
 class UnmarkCommandTest {
     private TaskList tasks;

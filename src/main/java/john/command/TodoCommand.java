@@ -1,10 +1,10 @@
 package john.command;
 
 import john.JohnException;
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
 import john.task.ToDo;
+import john.ui.Ui;
 
 /**
  * Command to add a todo task to the task list.
@@ -24,22 +24,22 @@ public class TodoCommand extends CommandBase {
     }
 
     /**
-     * Executes the todo command, adding a todo task to the list.
+     * Executes the todo command and returns the response string.
      *
      * @param tasks   The task list to add the todo to
      * @param ui      The user interface for displaying messages
      * @param storage The storage handler for saving tasks
+     * @return The response string
      * @throws JohnException if the argument is invalid
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument.trim().isEmpty()) {
             throw new JohnException("The description of a todo cannot be empty");
         }
         ToDo task = new ToDo(argument);
         tasks.add(task);
         storage.saveTasks(tasks);
-        System.out.printf(ADDED_MESSAGE, task);
-        System.out.printf(COUNT_MESSAGE, tasks.size());
+        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
     }
 }

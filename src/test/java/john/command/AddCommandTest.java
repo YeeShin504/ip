@@ -9,10 +9,10 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
 import john.task.ToDo;
+import john.ui.Ui;
 
 class AddCommandTest {
     private TaskList tasks;
@@ -33,11 +33,10 @@ class AddCommandTest {
     void execute_addsTaskAndPrintsMessage() {
         ToDo todo = new ToDo("read book");
         AddCommand cmd = new AddCommand(todo);
-        cmd.execute(tasks, ui, storage);
+        String response = cmd.execute(tasks, ui, storage);
         assertEquals(1, tasks.size());
-        String output = outContent.toString();
-        assertTrue(output.contains("Got it. I've added this task:"));
-        assertTrue(output.contains("[T] [ ] read book"));
-        assertTrue(output.contains("Now you have 1 tasks in the list."));
+        assertTrue(response.contains("Got it. I've added this task:"));
+        assertTrue(response.contains("[T] [ ] read book"));
+        assertTrue(response.contains("Now you have 1 tasks in the list."));
     }
 }

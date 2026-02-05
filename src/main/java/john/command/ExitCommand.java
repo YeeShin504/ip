@@ -1,20 +1,25 @@
 package john.command;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
+import john.ui.Ui;
 
 /**
  * Command to exit the application.
  */
 public class ExitCommand extends CommandBase {
     /**
-     * Executes the exit command, saving tasks and displaying a goodbye message.
+     * Executes the exit command and returns the response string.
+     *
+     * @param tasks   The task list to operate on
+     * @param ui      The user interface
+     * @param storage The storage handler
+     * @return The response string
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         storage.saveTasks(tasks);
-        System.out.println("Bye. Hope to see you again soon!");
+        return "Bye. Hope to see you again soon!";
     }
 
     /**

@@ -1,9 +1,10 @@
 package john.command;
 
-import john.Storage;
-import john.Ui;
+import john.JohnException;
+import john.storage.Storage;
 import john.task.Task;
 import john.task.TaskList;
+import john.ui.Ui;
 
 /**
  * Command to mark a task as complete.
@@ -21,17 +22,19 @@ public class MarkCommand extends CommandBase {
     }
 
     /**
-     * Executes the mark command, marking the task as complete.
+     * Executes the mark command and returns the response string.
      *
      * @param tasks   The task list containing the task to mark
      * @param ui      The user interface for displaying messages
      * @param storage The storage handler for saving tasks
+     * @return The response string
      * @throws JohnException if the task number is invalid
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(Integer.parseInt(taskNum) - 1);
         task.markComplete();
         storage.saveTasks(tasks);
+        return "Nice! I've marked this task as done:\n    " + task;
     }
 }

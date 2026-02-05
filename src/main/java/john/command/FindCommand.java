@@ -1,7 +1,8 @@
 package john.command;
 
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
+import john.ui.Ui;
 
 /**
  * Represents a command to find and list all tasks containing a specific
@@ -20,19 +21,16 @@ public class FindCommand extends CommandBase {
     }
 
     /**
-     * Executes the find command by searching for tasks containing the keyword
-     * and displaying the matching tasks to the user.
+     * Executes the find command and returns the response string.
      *
      * @param tasks   The current list of tasks.
      * @param ui      The user interface for displaying output.
      * @param storage The storage handler (not used in this command).
+     * @return The response string
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, john.Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         TaskList matchingTasks = tasks.findTasksByKeyword(keyword);
-        ui.showLine();
-        System.out.println(" Here are the matching tasks in your list:");
-        System.out.print(matchingTasks);
-        ui.showLine();
+        return " Here are the matching tasks in your list:\n" + matchingTasks.toString();
     }
 }
