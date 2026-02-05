@@ -1,4 +1,4 @@
-package john;
+package john.storage;
 
 import java.io.File;
 import java.io.FileWriter;

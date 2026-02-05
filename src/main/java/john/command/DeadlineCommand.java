@@ -1,11 +1,11 @@
 package john.command;
 
 import john.JohnException;
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.Deadline;
 import john.task.Task;
 import john.task.TaskList;
+import john.ui.Ui;
 
 /**
  * Command to add a deadline task to the task list.
@@ -25,15 +25,16 @@ public class DeadlineCommand extends CommandBase {
     }
 
     /**
-     * Executes the deadline command, adding a deadline task to the list.
+     * Executes the deadline command and returns the response string.
      *
      * @param tasks   The task list to add the deadline to
      * @param ui      The user interface for displaying messages
      * @param storage The storage handler for saving tasks
+     * @return The response string
      * @throws JohnException if the argument is invalid or date parsing fails
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument == null || argument.trim().isEmpty()) {
             throw new JohnException("The input of a deadline cannot be empty.");
         }
@@ -55,7 +56,6 @@ public class DeadlineCommand extends CommandBase {
         Task task = new Deadline(description, deadline);
         tasks.add(task);
         storage.saveTasks(tasks);
-        System.out.printf(ADDED_MESSAGE, task);
-        System.out.printf(COUNT_MESSAGE, tasks.size());
+        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
     }
 }

@@ -6,13 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
 import john.task.ToDo;
+import john.ui.Ui;
 
 class DeleteCommandTest {
     private TaskList tasks;
@@ -30,13 +31,17 @@ class DeleteCommandTest {
         System.setOut(new PrintStream(outContent));
     }
 
+    @AfterEach
+    void tearDown() {
+        new java.io.File("./data/test_delete_command.txt").delete();
+    }
+
     @Test
     void execute_removesTaskAndPrintsMessage() {
         DeleteCommand cmd = new DeleteCommand("1");
-        cmd.execute(tasks, ui, storage);
+        String response = cmd.execute(tasks, ui, storage);
         assertEquals(0, tasks.size());
-        String output = outContent.toString();
-        assertTrue(output.contains("Noted. I've removed this task:"));
-        assertTrue(output.contains("[T] [ ] read book"));
+        assertTrue(response.contains("Noted. I've removed this task:"));
+        assertTrue(response.contains("[T] [ ] read book"));
     }
 }

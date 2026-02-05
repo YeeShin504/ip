@@ -5,13 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
 import john.task.ToDo;
+import john.ui.Ui;
 
 class ListCommandTest {
     private TaskList tasks;
@@ -32,12 +33,16 @@ class ListCommandTest {
         System.setOut(new PrintStream(outContent));
     }
 
+    @AfterEach
+    void tearDown() {
+        new java.io.File("./data/test_list_command.txt").delete();
+    }
+
     @Test
     void execute_printsTaskList() {
-        new ListCommand().execute(tasks, ui, storage);
-        String output = outContent.toString();
-        assertTrue(output.contains("Here are the tasks in your list:"));
-        assertTrue(output.contains("1. [T] [ ] read book"));
-        assertTrue(output.contains("2. [T] [X] marked task"));
+        String response = new ListCommand().execute(tasks, ui, storage);
+        assertTrue(response.contains("Here are the tasks in your list:"));
+        assertTrue(response.contains("1. [T] [ ] read book"));
+        assertTrue(response.contains("2. [T] [X] marked task"));
     }
 }

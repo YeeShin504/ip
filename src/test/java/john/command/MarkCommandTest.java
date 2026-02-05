@@ -5,13 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
 import john.task.ToDo;
+import john.ui.Ui;
 
 class MarkCommandTest {
     private TaskList tasks;
@@ -27,6 +28,11 @@ class MarkCommandTest {
         storage = new Storage("./data/test_mark_command.txt");
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
+    }
+
+    @AfterEach
+    void tearDown() {
+        new java.io.File("./data/test_mark_command.txt").delete();
     }
 
     @Test

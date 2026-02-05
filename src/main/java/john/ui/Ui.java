@@ -1,4 +1,6 @@
-package john;
+package john.ui;
+
+import java.util.Scanner;
 
 import john.command.CommandBase;
 
@@ -6,7 +8,7 @@ import john.command.CommandBase;
  * Handles user interface interactions for the John application.
  */
 public class Ui {
-    private final java.util.Scanner sc = new java.util.Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     /**
      * Shows the welcome message to the user.
@@ -49,12 +51,31 @@ public class Ui {
     }
 
     /**
+     * Shows a response message to the user.
+     *
+     * @param response The response message to display
+     */
+    public void showResponse(String response) {
+        System.out.println(response);
+    }
+
+    /**
      * Reads a command from the user input.
      *
      * @return The parsed CommandBase object
      */
     public CommandBase readCommand() {
         String input = sc.nextLine();
+        return john.Parser.parse(input);
+    }
+
+    /**
+     * Reads a command from a given input string.
+     *
+     * @param input The user input string
+     * @return The parsed CommandBase object
+     */
+    public CommandBase readCommand(String input) {
         return john.Parser.parse(input);
     }
 

@@ -7,12 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.TaskList;
+import john.ui.Ui;
 
 class EventCommandTest {
     private TaskList tasks;
@@ -29,16 +30,20 @@ class EventCommandTest {
         System.setOut(new PrintStream(outContent));
     }
 
+    @AfterEach
+    void tearDown() {
+        new java.io.File("./data/test_event_command.txt").delete();
+    }
+
     @Test
     void execute_addsEventTask() {
         EventCommand cmd = new EventCommand("project meeting /from 11/2/2026 2359 /to 2/11/2026 0000");
-        cmd.execute(tasks, ui, storage);
+        String response = cmd.execute(tasks, ui, storage);
         assertEquals(1, tasks.size());
-        String output = outContent.toString();
-        assertTrue(output.contains("Got it. I've added this task:"));
-        assertTrue(output.contains("[E] [ ] project meeting"));
-        assertTrue(output.contains("11 Feb 2026"));
-        assertTrue(output.contains("2 Nov 2026"));
+        assertTrue(response.contains("Got it. I've added this task:"));
+        assertTrue(response.contains("[E] [ ] project meeting"));
+        assertTrue(response.contains("11 Feb 2026"));
+        assertTrue(response.contains("2 Nov 2026"));
     }
 
     @Test

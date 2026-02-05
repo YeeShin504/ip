@@ -1,10 +1,10 @@
 package john.command;
 
 import john.JohnException;
-import john.Storage;
-import john.Ui;
+import john.storage.Storage;
 import john.task.Task;
 import john.task.TaskList;
+import john.ui.Ui;
 
 /**
  * Command to delete a task from the task list.
@@ -24,19 +24,19 @@ public class DeleteCommand extends CommandBase {
     }
 
     /**
-     * Executes the delete command, removing the task from the list.
+     * Executes the delete command and returns the response string.
      *
      * @param tasks   The task list to remove the task from
      * @param ui      The user interface for displaying messages
      * @param storage The storage handler for saving tasks
+     * @return The response string
      * @throws JohnException if the task number is invalid
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(Integer.parseInt(taskNum) - 1);
         tasks.remove(task);
         storage.saveTasks(tasks);
-        System.out.printf(REMOVED_MESSAGE, task);
-        System.out.printf(COUNT_MESSAGE, tasks.size());
+        return String.format(REMOVED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
     }
 }
