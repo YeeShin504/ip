@@ -27,6 +27,18 @@ public class TaskList {
         this.tasks = new ArrayList<>(tasks);
     }
 
+    /**
+     * Constructs a TaskList from a variable number of Task arguments.
+     *
+     * @param tasks The tasks to add to the list
+     */
+    public TaskList(Task... tasks) {
+        this.tasks = new ArrayList<>();
+        for (Task task : tasks) {
+            this.tasks.add(task);
+        }
+    }
+
     @Override
     public String toString() {
         if (tasks.isEmpty()) {
