@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +28,11 @@ class DeadlineCommandTest {
         storage = new Storage("./data/test_deadline_command.txt");
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
+    }
+
+    @AfterEach
+    void tearDown() {
+        new java.io.File("./data/test_deadline_command.txt").delete();
     }
 
     @Test

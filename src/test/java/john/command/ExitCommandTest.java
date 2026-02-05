@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +28,11 @@ class ExitCommandTest {
         System.setOut(new PrintStream(outContent));
     }
 
+    @AfterEach
+    void tearDown() {
+        new java.io.File("./data/test_exit_command.txt").delete();
+    }
+
     @Test
     void execute_printsGoodbyeAndSavesTasks() {
         TodoCommand todo = new TodoCommand("read book");
@@ -38,7 +44,6 @@ class ExitCommandTest {
 
         TaskList loadedTasks = storage.loadTasks();
         assertTrue(loadedTasks.get(0).toString().contains("[T] [ ] read book"));
-        new java.io.File("./data/test_exit_command.txt").delete();
     }
 
     @Test
