@@ -11,9 +11,9 @@ public class Ui {
     private final Scanner sc = new Scanner(System.in);
 
     /**
-     * Shows the welcome message to the user.
+     * Returns the welcome message as a String (for GUI use).
      */
-    public void showWelcome() {
+    public static String getWelcomeMessage() {
         String logo = """
                        __      __       \s
                       / /___  / /_  ____
@@ -21,16 +21,25 @@ public class Ui {
                 / /_/ / /_/ / / / / / / /\s
                 \\____/\\____/_/ /_/_/ /_/
                 """;
-        showLine();
-        System.out.println("Hello! I'm\n" + logo);
-        System.out.println("What can I do for you?");
-        showLine();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello! I'm\n").append(logo).append("\n");
+        sb.append("What can I do for you?\n");
+        return sb.toString();
+    }
+
+    /**
+     * Shows the welcome message to the user (console version).
+     */
+    public static void showWelcome() {
+        Ui.showLine();
+        System.out.println(getWelcomeMessage());
+        Ui.showLine();
     }
 
     /**
      * Shows a separator line in the UI.
      */
-    public void showLine() {
+    public static void showLine() {
         System.out.println("_".repeat(100));
     }
 

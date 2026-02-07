@@ -33,9 +33,17 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the John instance */
-    public void setJohn(John j) {
-        john = j;
+    /** 
+     * Injects the John instance and shows welcome message 
+     * 
+     * @param john The John instance
+     */
+    public void setJohn(John john) {
+        this.john = john;
+        String welcome = Ui.getWelcomeMessage();
+        dialogContainer.getChildren().add(
+            DialogBox.getJohnDialog(welcome, johnImage)
+        );
     }
 
     /**
