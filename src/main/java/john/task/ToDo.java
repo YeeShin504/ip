@@ -12,6 +12,7 @@ public class ToDo extends Task {
      * @param description The task description
      */
     public ToDo(String description) {
+        assert description != null : "ToDo description must not be null";
         super(description);
     }
 
@@ -22,6 +23,7 @@ public class ToDo extends Task {
      * @param isComplete  Whether the task is complete
      */
     public ToDo(String description, boolean isComplete) {
+        assert description != null : "ToDo description must not be null";
         super(description, isComplete);
     }
 
@@ -45,7 +47,9 @@ public class ToDo extends Task {
      * @throws JohnException if the data string is invalid
      */
     public static ToDo fromDataString(String dataString) {
+        assert dataString != null : "Data string must not be null";
         String[] parts = dataString.split(" \\| ", 3);
+        assert parts.length == 3 : "ToDo data string must have 3 parts";
         if (!parts[0].trim().equals("T")) {
             throw new JohnException("Data string is not of type ToDo: " + dataString);
         }
