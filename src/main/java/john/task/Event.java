@@ -23,6 +23,9 @@ public class Event extends Task {
      * @param endDate     The end date and time
      */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate) {
+        assert description != null : "Event description must not be null";
+        assert startDate != null : "Event start date must not be null";
+        assert endDate != null : "Event end date must not be null";
         super(description);
         this.startDate = startDate;
         this.endDate = endDate;
@@ -38,6 +41,9 @@ public class Event extends Task {
      * @param isComplete  Whether the task is complete
      */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate, boolean isComplete) {
+        assert description != null : "Event description must not be null";
+        assert startDate != null : "Event start date must not be null";
+        assert endDate != null : "Event end date must not be null";
         super(description);
         this.startDate = startDate;
         this.endDate = endDate;
@@ -66,7 +72,9 @@ public class Event extends Task {
      * @throws JohnException if the data string is invalid
      */
     public static Event fromDataString(String dataString) {
+        assert dataString != null : "Data string must not be null";
         String[] parts = dataString.split(" \\| ", 5);
+        assert parts.length == 5 : "Event data string must have 5 parts";
         if (!parts[0].trim().equals("E")) {
             throw new JohnException("Data string is not of type Event: " + dataString);
         }
