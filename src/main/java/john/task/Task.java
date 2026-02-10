@@ -26,7 +26,7 @@ public abstract class Task {
      * @param description The task description
      * @param isCompleted Whether the task is completed
      */
-    public Task(String description, boolean isComplete) {
+    public Task(String description, boolean isCompleted) {
         assert description != null : "Task description must not be null";
         this.description = description;
         this.isCompleted = isCompleted;
