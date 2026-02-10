@@ -12,7 +12,7 @@ class TaskListTest {
     @Test
     void addTask_shouldBeRetrievableAndRemovable() {
         TaskList list = new TaskList();
-        ToDo todo = new ToDo("read book");
+        Todo todo = new Todo("read book");
         list.add(todo);
         assertEquals(1, list.size());
         assertEquals(todo, list.get(0));
@@ -29,8 +29,8 @@ class TaskListTest {
 
     @Test
     void getAll_returnsAllTasks() {
-        ToDo t1 = new ToDo("a");
-        ToDo t2 = new ToDo("b");
+        Todo t1 = new Todo("a");
+        Todo t2 = new Todo("b");
         TaskList list = new TaskList();
         list.add(t1);
         list.add(t2);

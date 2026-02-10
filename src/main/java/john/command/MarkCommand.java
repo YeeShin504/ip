@@ -7,7 +7,7 @@ import john.task.TaskList;
 import john.ui.Ui;
 
 /**
- * Command to mark a task as complete.
+ * Command to mark a task as completed.
  */
 public class MarkCommand extends CommandBase {
     private final String taskNum;
@@ -15,7 +15,7 @@ public class MarkCommand extends CommandBase {
     /**
      * Constructs a MarkCommand for the specified task number.
      *
-     * @param taskNum The task number to mark as complete
+     * @param taskNum The task number to mark as completed
      */
     public MarkCommand(String taskNum) {
         assert taskNum != null : "Task number must not be null";

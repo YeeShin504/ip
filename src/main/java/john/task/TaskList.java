@@ -31,12 +31,12 @@ public class TaskList {
     /**
      * Constructs a TaskList from a variable number of Task arguments.
      *
-     * @param tasks The tasks to add to the list
+     * @param initialTasks The tasks to add to the list
      */
-    public TaskList(Task... tasks) {
-        assert tasks != null : "Task varargs must not be null";
+    public TaskList(Task... initialTasks) {
+        assert initialTasks != null : "Task varargs must not be null";
         this.tasks = new ArrayList<>();
-        for (Task task : tasks) {
+        for (Task task : initialTasks) {
             assert task != null : "Task in varargs must not be null";
             this.tasks.add(task);
         }
@@ -104,7 +104,7 @@ public class TaskList {
      *
      * @return The list of tasks
      */
-    public ArrayList<Task> getAll() {
+    public List<Task> getAll() {
         return tasks;
     }
 

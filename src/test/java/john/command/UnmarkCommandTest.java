@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import john.storage.Storage;
 import john.task.TaskList;
-import john.task.ToDo;
+import john.task.Todo;
 import john.ui.Ui;
 
 class UnmarkCommandTest {
@@ -23,7 +23,7 @@ class UnmarkCommandTest {
     @BeforeEach
     void setUp() {
         tasks = new TaskList();
-        ToDo todo = new ToDo("read book");
+        Todo todo = new Todo("read book");
         todo.markComplete();
         tasks.add(todo);
         ui = new Ui();
