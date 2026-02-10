@@ -9,6 +9,7 @@ import john.command.ExitCommand;
 import john.command.FindCommand;
 import john.command.ListCommand;
 import john.command.MarkCommand;
+import john.command.SortCommand;
 import john.command.TodoCommand;
 import john.command.UnmarkCommand;
 
@@ -47,6 +48,8 @@ public class Parser {
             return new EventCommand(argument);
         case FIND:
             return new FindCommand(argument);
+        case SORT:
+            return new SortCommand(argument);
         default:
             break;
         }

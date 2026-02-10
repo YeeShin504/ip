@@ -5,7 +5,7 @@ import john.JohnException;
 /**
  * Abstract base class representing a task.
  */
-public abstract class Task {
+public abstract class Task implements Comparable<Task> {
     protected String description;
     protected boolean isCompleted = false;
 

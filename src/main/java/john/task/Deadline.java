@@ -73,4 +73,14 @@ public class Deadline extends Task {
         Deadline deadlineTask = new Deadline(description, deadline, isCompleted);
         return deadlineTask;
     }
+
+    @Override
+    public int compareTo(Task other) {
+        if (!(other instanceof Deadline)) {
+            throw new IllegalArgumentException("Can only compare Deadline to Deadline");
+        }
+        Deadline d = (Deadline) other;
+        // Descending by default (most recent first)
+        return d.deadline.compareTo(this.deadline);
+    }
 }

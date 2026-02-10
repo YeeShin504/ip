@@ -1,6 +1,7 @@
 package john.task;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -131,5 +132,59 @@ public class TaskList {
                 .filter(task -> task != null)
                 .filter(task -> task.description.contains(keyword))
         );
+    }
+
+    /**
+     * Sorts tasks by grouping: Deadlines first (by deadline), then Events (by start), then Todos.
+     * By default, Deadlines and Events are sorted earliest to latest. If isLatestFirst is true, latest to earliest.
+     * Todos are always sorted alphabetically. Same dates are sorted alphabetically by description.
+     * @param isLatestFirst If true, sorts Deadlines/Events from latest to earliest.
+     */
+    public void sortByTypeAndDate(boolean isLatestFirst) {
+        ArrayList<Task> sorted = this.tasks.stream()
+            .sorted(getTaskSortComparator(isLatestFirst))
+            .collect(Collectors.toCollection(ArrayList::new));
+        this.tasks.clear();
+        this.tasks.addAll(sorted);
+    }
+
+    /**
+     * Returns a comparator for sorting tasks by group and date, with optional latest-first order.
+     * Todos are always alphabetical. Same dates are sorted alphabetically by description.
+     */
+    private Comparator<Task> getTaskSortComparator(boolean isLatestFirst) {
+        return (a, b) -> {
+            int groupA = getGroupOrder(a);
+            int groupB = getGroupOrder(b);
+            if (groupA != groupB) {
+                return groupA - groupB;
+            }
+            // Todos are always alphabetical regardless of sort direction
+            if (a instanceof Todo) {
+                return a.description.compareToIgnoreCase(b.description);
+            }
+            // For Deadlines and Events, sort by date then alphabetically
+            int cmp = a.compareTo(b);
+            if (cmp == 0) {
+                // Same date, sort alphabetically
+                return a.description.compareToIgnoreCase(b.description);
+            }
+            // Task.compareTo is naturally descending, so negate for default (earliest-first)
+            return isLatestFirst ? cmp : -cmp;
+        };
+    }
+
+    /**
+     * Returns the group order for a task type.
+     * Deadlines = 0, Events = 1, Todos = 2.
+     */
+    private int getGroupOrder(Task t) {
+        if (t instanceof Deadline) {
+            return 0;
+        }
+        if (t instanceof john.task.Event) {
+            return 1;
+        }
+        return 2; // Todo and others
     }
 }

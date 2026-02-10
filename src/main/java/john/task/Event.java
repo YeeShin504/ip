@@ -85,4 +85,14 @@ public class Event extends Task {
         Event event = new Event(description, startDate, endDate, isCompleted);
         return event;
     }
+
+    @Override
+    public int compareTo(Task other) {
+        if (!(other instanceof Event)) {
+            throw new IllegalArgumentException("Can only compare Event to Event");
+        }
+        Event e = (Event) other;
+        // Descending by default (most recent start first)
+        return e.startDate.compareTo(this.startDate);
+    }
 }

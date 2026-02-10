@@ -58,4 +58,14 @@ public class Todo extends Task {
         Todo todo = new Todo(description, isCompleted);
         return todo;
     }
+
+    @Override
+    public int compareTo(Task other) {
+        if (!(other instanceof Todo)) {
+            throw new IllegalArgumentException("Can only compare Todo to Todo");
+        }
+        Todo t = (Todo) other;
+        // Ascending by default (alphabetical A-Z)
+        return this.description.compareToIgnoreCase(t.description);
+    }
 }

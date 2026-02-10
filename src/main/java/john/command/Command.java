@@ -14,7 +14,8 @@ public enum Command {
     UNMARK,
     LIST,
     BYE,
-    FIND;
+    FIND,
+    SORT;
 
     /**
      * Converts a string to the corresponding Command enum value.
