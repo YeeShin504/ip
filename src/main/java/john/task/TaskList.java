@@ -23,18 +23,21 @@ public class TaskList {
      *
      * @param tasks The list of tasks
      */
-    public TaskList(List<Task> initialTasks) {
-        this.tasks = new ArrayList<>(initialTasks);
+    public TaskList(List<Task> tasks) {
+        assert tasks != null : "Task list argument must not be null";
+        this.tasks = new ArrayList<>(tasks);
     }
 
     /**
      * Constructs a TaskList from a variable number of Task arguments.
      *
-     * @param tasks The tasks to add to the list
+     * @param initialTasks The tasks to add to the list
      */
     public TaskList(Task... initialTasks) {
+        assert initialTasks != null : "Task varargs must not be null";
         this.tasks = new ArrayList<>();
         for (Task task : initialTasks) {
+            assert task != null : "Task in varargs must not be null";
             this.tasks.add(task);
         }
     }
@@ -57,6 +60,7 @@ public class TaskList {
      * @param task The task to add
      */
     public void add(Task task) {
+        assert task != null : "Cannot add null task";
         tasks.add(task);
     }
 
@@ -82,6 +86,7 @@ public class TaskList {
      * @param task The task to remove
      */
     public void remove(Task task) {
+        assert task != null : "Cannot remove null task";
         tasks.remove(task);
     }
 
@@ -110,8 +115,10 @@ public class TaskList {
      * @return List of matching tasks.
      */
     public TaskList findTasksByKeyword(String keyword) {
+        assert keyword != null : "Keyword must not be null";
         TaskList result = new TaskList();
         for (Task task : this.tasks) {
+            assert task != null : "Task in list must not be null";
             if (task.description.contains(keyword)) {
                 result.add(task);
             }

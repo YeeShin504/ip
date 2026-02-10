@@ -21,6 +21,8 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDateTime deadline) {
         super(description);
+        assert description != null : "Deadline description must not be null";
+        assert deadline != null : "Deadline date must not be null";
         this.deadline = deadline;
     }
 
@@ -34,6 +36,8 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDateTime deadline, boolean isCompleted) {
         super(description, isCompleted);
+        assert description != null : "Deadline description must not be null";
+        assert deadline != null : "Deadline date must not be null";
         this.deadline = deadline;
     }
 
@@ -57,7 +61,9 @@ public class Deadline extends Task {
      * @throws JohnException if the data string is invalid
      */
     public static Deadline fromDataString(String dataString) {
+        assert dataString != null : "Data string must not be null";
         String[] parts = dataString.split(" \\| ", 4);
+        assert parts.length == 4 : "Deadline data string must have 4 parts";
         if (!parts[0].trim().equals("D")) {
             throw new JohnException("Data string is not of type Deadline: " + dataString);
         }

@@ -15,6 +15,7 @@ public abstract class Task {
      * @param description The task description
      */
     public Task(String description) {
+        assert description != null : "Task description must not be null";
         this.description = description;
         this.isCompleted = false;
     }
@@ -25,7 +26,8 @@ public abstract class Task {
      * @param description The task description
      * @param isCompleted Whether the task is completed
      */
-    public Task(String description, boolean isCompleted) {
+    public Task(String description, boolean isComplete) {
+        assert description != null : "Task description must not be null";
         this.description = description;
         this.isCompleted = isCompleted;
     }
@@ -51,6 +53,7 @@ public abstract class Task {
      * @throws JohnException if the data string is invalid
      */
     public static Task fromDataString(String dataString) {
+        assert dataString != null : "Data string must not be null";
         if (dataString.startsWith("T |")) {
             return Todo.fromDataString(dataString);
         } else if (dataString.startsWith("D |")) {

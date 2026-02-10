@@ -18,6 +18,7 @@ public class MarkCommand extends CommandBase {
      * @param taskNum The task number to mark as completed
      */
     public MarkCommand(String taskNum) {
+        assert taskNum != null : "Task number must not be null";
         this.taskNum = taskNum;
     }
 
