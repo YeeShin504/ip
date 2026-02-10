@@ -7,7 +7,7 @@ import john.JohnException;
  */
 public abstract class Task {
     protected String description;
-    protected boolean isComplete = false;
+    protected boolean isCompleted = false;
 
     /**
      * Constructs a Task with the given description.
@@ -16,23 +16,23 @@ public abstract class Task {
      */
     public Task(String description) {
         this.description = description;
-        this.isComplete = false;
+        this.isCompleted = false;
     }
 
     /**
      * Constructs a Task with the given description and completion status.
      *
      * @param description The task description
-     * @param isComplete  Whether the task is complete
+     * @param isCompleted Whether the task is completed
      */
-    public Task(String description, boolean isComplete) {
+    public Task(String description, boolean isCompleted) {
         this.description = description;
-        this.isComplete = isComplete;
+        this.isCompleted = isCompleted;
     }
 
     @Override
     public String toString() {
-        String status = isComplete ? "[X]" : "[ ]";
+        String status = isCompleted ? "[X]" : "[ ]";
         return String.format("%s %s", status, description);
     }
 
@@ -52,7 +52,7 @@ public abstract class Task {
      */
     public static Task fromDataString(String dataString) {
         if (dataString.startsWith("T |")) {
-            return ToDo.fromDataString(dataString);
+            return Todo.fromDataString(dataString);
         } else if (dataString.startsWith("D |")) {
             return Deadline.fromDataString(dataString);
         } else if (dataString.startsWith("E |")) {
@@ -63,13 +63,13 @@ public abstract class Task {
     }
 
     /**
-     * Marks the task as complete and displays a message.
+     * Marks the task as completed and displays a message.
      */
     public void markComplete() {
-        if (isComplete) {
+        if (isCompleted) {
             System.out.println("This task has already been marked as done:");
         } else {
-            isComplete = true;
+            isCompleted = true;
             System.out.println("Nice! I've marked this task as done:");
             System.out.printf("    %s\n", this);
         }
@@ -79,10 +79,10 @@ public abstract class Task {
      * Marks the task as incomplete and displays a message.
      */
     public void markIncomplete() {
-        if (!isComplete) {
+        if (!isCompleted) {
             System.out.println("This task has already been marked as not done:");
         } else {
-            isComplete = false;
+            isCompleted = false;
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.printf("    %s\n", this);

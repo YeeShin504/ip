@@ -30,10 +30,10 @@ public class Deadline extends Task {
      *
      * @param description The task description
      * @param deadline    The deadline date and time
-     * @param isComplete  Whether the task is complete
+     * @param isCompleted  Whether the task is completed
      */
-    public Deadline(String description, LocalDateTime deadline, boolean isComplete) {
-        super(description, isComplete);
+    public Deadline(String description, LocalDateTime deadline, boolean isCompleted) {
+        super(description, isCompleted);
         this.deadline = deadline;
     }
 
@@ -44,7 +44,7 @@ public class Deadline extends Task {
 
     @Override
     public String toDataString() {
-        String status = isComplete ? "1" : "0";
+        String status = isCompleted ? "1" : "0";
         String escapedDescription = description.replace("|", "\\|");
         return String.format("D | %s | %s | %s\n", status, escapedDescription, deadline.toString());
     }
@@ -61,10 +61,10 @@ public class Deadline extends Task {
         if (!parts[0].trim().equals("D")) {
             throw new JohnException("Data string is not of type Deadline: " + dataString);
         }
-        boolean isComplete = parts[1].trim().equals("1");
+        boolean isCompleted = parts[1].trim().equals("1");
         String description = parts[2].replace("\\|", "|");
         LocalDateTime deadline = LocalDateTime.parse(parts[3].trim());
-        Deadline deadlineTask = new Deadline(description, deadline, isComplete);
+        Deadline deadlineTask = new Deadline(description, deadline, isCompleted);
         return deadlineTask;
     }
 }

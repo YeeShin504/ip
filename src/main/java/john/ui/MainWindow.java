@@ -33,10 +33,10 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** 
-     * Injects the John instance and shows welcome message 
-     * 
-     * @param john The John instance
+    /**
+    * Injects the John instance and shows welcome message
+    *
+    * @param john The John instance
      */
     public void setJohn(John john) {
         this.john = john;
@@ -56,8 +56,8 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         String response = john.getResponse(input);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getJohnDialog(response, johnImage));
+            DialogBox.getUserDialog(input, userImage),
+            DialogBox.getJohnDialog(response, johnImage));
         userInput.clear();
 
         if (john.isLastCommandExit()) {

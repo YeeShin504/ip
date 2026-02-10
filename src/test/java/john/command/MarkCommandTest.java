@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import john.storage.Storage;
 import john.task.TaskList;
-import john.task.ToDo;
+import john.task.Todo;
 import john.ui.Ui;
 
 class MarkCommandTest {
@@ -23,7 +23,7 @@ class MarkCommandTest {
     @BeforeEach
     void setUp() {
         tasks = new TaskList();
-        tasks.add(new ToDo("read book"));
+        tasks.add(new Todo("read book"));
         ui = new Ui();
         storage = new Storage("./data/test_mark_command.txt");
         outContent = new ByteArrayOutputStream();

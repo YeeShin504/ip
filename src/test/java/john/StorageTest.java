@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import john.storage.Storage;
 import john.task.TaskList;
-import john.task.ToDo;
+import john.task.Todo;
 
 class StorageTest {
     @Test
@@ -26,7 +26,7 @@ class StorageTest {
     void saveAndLoadTasks_withToDo() {
         String testFile = "./data/test_storage_todo.txt";
         Storage storage = new Storage(testFile);
-        ToDo todo = new ToDo("Test task");
+        Todo todo = new Todo("Test task");
         TaskList list = new TaskList();
         list.add(todo);
         storage.saveTasks(list);

@@ -5,24 +5,24 @@ import john.JohnException;
 /**
  * Represents a todo task.
  */
-public class ToDo extends Task {
+public class Todo extends Task {
     /**
-     * Constructs a ToDo task with the given description.
+     * Constructs a Todo task with the given description.
      *
      * @param description The task description
      */
-    public ToDo(String description) {
+    public Todo(String description) {
         super(description);
     }
 
     /**
-     * Constructs a ToDo task with the given description and completion status.
+     * Constructs a Todo task with the given description and completion status.
      *
      * @param description The task description
-     * @param isComplete  Whether the task is complete
+     * @param isCompleted  Whether the task is completed
      */
-    public ToDo(String description, boolean isComplete) {
-        super(description, isComplete);
+    public Todo(String description, boolean isCompleted) {
+        super(description, isCompleted);
     }
 
     @Override
@@ -32,26 +32,26 @@ public class ToDo extends Task {
 
     @Override
     public String toDataString() {
-        String status = isComplete ? "1" : "0";
+        String status = isCompleted ? "1" : "0";
         String escapedDescription = description.replace("|", "\\|");
         return String.format("T | %s | %s\n", status, escapedDescription);
     }
 
     /**
-     * Creates a ToDo object from a data string.
+     * Creates a Todo object from a data string.
      *
      * @param dataString The data string
-     * @return The ToDo object
+     * @return The Todo object
      * @throws JohnException if the data string is invalid
      */
-    public static ToDo fromDataString(String dataString) {
+    public static Todo fromDataString(String dataString) {
         String[] parts = dataString.split(" \\| ", 3);
         if (!parts[0].trim().equals("T")) {
-            throw new JohnException("Data string is not of type ToDo: " + dataString);
+            throw new JohnException("Data string is not of type Todo: " + dataString);
         }
-        boolean isComplete = parts[1].trim().equals("1");
+        boolean isCompleted = parts[1].trim().equals("1");
         String description = parts[2].replace("\\|", "|");
-        ToDo todo = new ToDo(description, isComplete);
+        Todo todo = new Todo(description, isCompleted);
         return todo;
     }
 }

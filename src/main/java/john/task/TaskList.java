@@ -23,8 +23,8 @@ public class TaskList {
      *
      * @param tasks The list of tasks
      */
-    public TaskList(List<Task> tasks) {
-        this.tasks = new ArrayList<>(tasks);
+    public TaskList(List<Task> initialTasks) {
+        this.tasks = new ArrayList<>(initialTasks);
     }
 
     /**
@@ -32,9 +32,9 @@ public class TaskList {
      *
      * @param tasks The tasks to add to the list
      */
-    public TaskList(Task... tasks) {
+    public TaskList(Task... initialTasks) {
         this.tasks = new ArrayList<>();
-        for (Task task : tasks) {
+        for (Task task : initialTasks) {
             this.tasks.add(task);
         }
     }
@@ -99,7 +99,7 @@ public class TaskList {
      *
      * @return The list of tasks
      */
-    public ArrayList<Task> getAll() {
+    public List<Task> getAll() {
         return tasks;
     }
 

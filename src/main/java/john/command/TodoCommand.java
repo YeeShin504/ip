@@ -3,7 +3,7 @@ package john.command;
 import john.JohnException;
 import john.storage.Storage;
 import john.task.TaskList;
-import john.task.ToDo;
+import john.task.Todo;
 import john.ui.Ui;
 
 /**
@@ -37,7 +37,7 @@ public class TodoCommand extends CommandBase {
         if (argument.trim().isEmpty()) {
             throw new JohnException("The description of a todo cannot be empty");
         }
-        ToDo task = new ToDo(argument);
+        Todo task = new Todo(argument);
         tasks.add(task);
         storage.saveTasks(tasks);
         return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
