@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import john.task.Task;
 import john.task.TaskList;
@@ -44,9 +45,10 @@ public class Storage {
             }
         }
         try (FileWriter writer = new FileWriter(dataFile)) {
-            for (Task task : taskList.getAll()) {
-                writer.write(task.toDataString());
-            }
+            String allTasks = taskList.getAll().stream()
+                .map(Task::toDataString)
+                .collect(Collectors.joining("\n"));
+            writer.write(allTasks);
         } catch (IOException e) {
             System.err.println("Warning: Could not save tasks to file at " + dataFile);
         }
