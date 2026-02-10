@@ -34,9 +34,9 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-    * Injects the John instance and shows welcome message
-    *
-    * @param john The John instance
+     * Injects the John instance and shows welcome message
+     *
+     * @param john The John instance
      */
     public void setJohn(John john) {
         this.john = john;

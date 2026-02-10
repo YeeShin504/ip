@@ -1,7 +1,9 @@
 package john.task;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import john.JohnException;
 
@@ -19,11 +21,11 @@ public class TaskList {
     }
 
     /**
-     * Constructs a TaskList from an existing list of tasks.
+     * Constructs a TaskList from an existing ArrayList of tasks.
      *
      * @param tasks The list of tasks
      */
-    public TaskList(List<Task> tasks) {
+    public TaskList(ArrayList<Task> tasks) {
         assert tasks != null : "Task list argument must not be null";
         this.tasks = new ArrayList<>(tasks);
     }
@@ -42,16 +44,24 @@ public class TaskList {
         }
     }
 
+    /**
+     * Constructs a TaskList from a Stream of tasks.
+     *
+     * @param taskStream The stream of tasks
+     */
+    public TaskList(Stream<Task> taskStream) {
+        this.tasks = taskStream.collect(Collectors.toCollection(ArrayList::new));
+    }
+
+
     @Override
     public String toString() {
         if (tasks.isEmpty()) {
             return "No tasks found.";
         }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tasks.size(); i++) {
-            sb.append(String.format("%d. %s\n", i + 1, tasks.get(i)));
-        }
-        return sb.toString();
+        return IntStream.range(0, tasks.size())
+                .mapToObj(i -> String.format("%d. %s\n", i + 1, tasks.get(i)))
+                .collect(Collectors.joining());
     }
 
     /**
@@ -104,8 +114,8 @@ public class TaskList {
      *
      * @return The list of tasks
      */
-    public List<Task> getAll() {
-        return tasks;
+    public ArrayList<Task> getAll() {
+        return this.tasks;
     }
 
     /**
@@ -116,13 +126,10 @@ public class TaskList {
      */
     public TaskList findTasksByKeyword(String keyword) {
         assert keyword != null : "Keyword must not be null";
-        TaskList result = new TaskList();
-        for (Task task : this.tasks) {
-            assert task != null : "Task in list must not be null";
-            if (task.description.contains(keyword)) {
-                result.add(task);
-            }
-        }
-        return result;
+        return new TaskList(
+            tasks.stream()
+                .filter(task -> task != null)
+                .filter(task -> task.description.contains(keyword))
+        );
     }
 }
