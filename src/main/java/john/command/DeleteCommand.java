@@ -20,6 +20,7 @@ public class DeleteCommand extends CommandBase {
      * @param taskNum The task number to delete
      */
     public DeleteCommand(String taskNum) {
+        assert taskNum != null : "Task number must not be null";
         this.taskNum = taskNum;
     }
 

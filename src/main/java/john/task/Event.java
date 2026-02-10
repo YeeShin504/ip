@@ -24,6 +24,9 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime startDate, LocalDateTime endDate) {
         super(description);
+        assert description != null : "Event description must not be null";
+        assert startDate != null : "Event start date must not be null";
+        assert endDate != null : "Event end date must not be null";
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -35,13 +38,16 @@ public class Event extends Task {
      * @param description The task description
      * @param startDate   The start date and time
      * @param endDate     The end date and time
-     * @param isComplete  Whether the task is complete
+     * @param isCompleted Whether the task is completed
      */
-    public Event(String description, LocalDateTime startDate, LocalDateTime endDate, boolean isComplete) {
+    public Event(String description, LocalDateTime startDate, LocalDateTime endDate, boolean isCompleted) {
         super(description);
+        assert description != null : "Event description must not be null";
+        assert startDate != null : "Event start date must not be null";
+        assert endDate != null : "Event end date must not be null";
         this.startDate = startDate;
         this.endDate = endDate;
-        this.isComplete = isComplete;
+        this.isCompleted = isCompleted;
     }
 
     @Override
@@ -52,7 +58,7 @@ public class Event extends Task {
 
     @Override
     public String toDataString() {
-        String status = isComplete ? "1" : "0";
+        String status = isCompleted ? "1" : "0";
         String escapedDescription = description.replace("|", "\\|");
         return String.format("E | %s | %s | %s | %s\n", status, escapedDescription, startDate.toString(),
                 endDate.toString());
@@ -66,15 +72,17 @@ public class Event extends Task {
      * @throws JohnException if the data string is invalid
      */
     public static Event fromDataString(String dataString) {
+        assert dataString != null : "Data string must not be null";
         String[] parts = dataString.split(" \\| ", 5);
+        assert parts.length == 5 : "Event data string must have 5 parts";
         if (!parts[0].trim().equals("E")) {
             throw new JohnException("Data string is not of type Event: " + dataString);
         }
-        boolean isComplete = parts[1].trim().equals("1");
+        boolean isCompleted = parts[1].trim().equals("1");
         String description = parts[2].replace("\\|", "|");
         LocalDateTime startDate = LocalDateTime.parse(parts[3].trim());
         LocalDateTime endDate = LocalDateTime.parse(parts[4].trim());
-        Event event = new Event(description, startDate, endDate, isComplete);
+        Event event = new Event(description, startDate, endDate, isCompleted);
         return event;
     }
 }

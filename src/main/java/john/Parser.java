@@ -24,6 +24,7 @@ public class Parser {
      * @throws JohnException if the input is invalid
      */
     public static CommandBase parse(String input) {
+        assert input != null : "Input to Parser.parse must not be null";
         String[] parts = input.trim().split(" ", 2);
         String argument = parts.length > 1 ? parts[1] : "";
         Command cmd = Command.fromString(parts[0]);

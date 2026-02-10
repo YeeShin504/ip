@@ -56,8 +56,8 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         String response = john.getResponse(input);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getJohnDialog(response, johnImage));
+            DialogBox.getUserDialog(input, userImage),
+            DialogBox.getJohnDialog(response, johnImage));
         userInput.clear();
 
         if (john.isLastCommandExit()) {

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import john.JohnException;
 import john.storage.Storage;
 import john.task.TaskList;
-import john.task.ToDo;
+import john.task.Todo;
 import john.ui.Ui;
 
 class TodoCommandTest {
@@ -42,7 +42,7 @@ class TodoCommandTest {
         TodoCommand cmd = new TodoCommand("read book");
         String response = cmd.execute(tasks, ui, storage);
         assertEquals(1, tasks.size());
-        assertTrue(tasks.get(0) instanceof ToDo);
+        assertTrue(tasks.get(0) instanceof Todo);
         assertEquals("read book", tasks.get(0).toString().replaceAll(".*\\] ", ""));
         assertTrue(response.contains("Got it. I've added this task:"));
         assertTrue(response.contains("[T] [ ] read book"));

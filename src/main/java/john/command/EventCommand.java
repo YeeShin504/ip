@@ -1,5 +1,9 @@
 package john.command;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import john.JohnException;
 import john.storage.Storage;
 import john.task.Event;
@@ -13,6 +17,7 @@ import john.ui.Ui;
 public class EventCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
     private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
+    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private final String argument;
 
     /**
@@ -39,33 +44,33 @@ public class EventCommand extends CommandBase {
         if (argument == null || argument.isEmpty()) {
             throw new JohnException("The input of an event cannot be empty.");
         }
-        String[] res = argument.split("/from");
-        if (res.length == 1) {
+        String[] parts = argument.split("/from");
+        if (parts.length == 1) {
             throw new JohnException("The start date of an event cannot be empty.");
-        } else if (res.length > 2) {
+        } else if (parts.length > 2) {
             throw new JohnException("Too many arguments. An event should only have a start date");
         }
-        String description = res[0].trim();
+        String description = parts[0].trim();
         if (description.isEmpty()) {
             throw new JohnException("The description of an event cannot be empty.");
         }
-        String[] dateParts = res[1].trim().split("/to");
+        String[] dateParts = parts[1].trim().split("/to");
         if (dateParts.length == 1) {
             throw new JohnException("The end date of an event cannot be empty.");
         } else if (dateParts.length > 2) {
             throw new JohnException("Too many arguments. An event should only have an end date.");
         }
-        java.time.LocalDateTime startDate;
-        java.time.LocalDateTime endDate;
+        LocalDateTime startDate;
+        LocalDateTime endDate;
         try {
-            startDate = java.time.LocalDateTime.parse(dateParts[0].trim(),
-                    java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-            endDate = java.time.LocalDateTime.parse(dateParts[1].trim(),
-                    java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+            startDate = LocalDateTime.parse(dateParts[0].trim(),
+                INPUT_FORMATTER);
+            endDate = LocalDateTime.parse(dateParts[1].trim(),
+                INPUT_FORMATTER);
             if (endDate.isBefore(startDate)) {
                 throw new JohnException("The end date of an event cannot be before the start date.");
             }
-        } catch (java.time.format.DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             throw new JohnException("Invalid date format. Please use the format: d/M/yyyy HHmm");
         }
         Task task = new Event(description, startDate, endDate);

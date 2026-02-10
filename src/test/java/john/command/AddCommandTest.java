@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import john.storage.Storage;
 import john.task.TaskList;
-import john.task.ToDo;
+import john.task.Todo;
 import john.ui.Ui;
 
 class AddCommandTest {
@@ -37,7 +37,7 @@ class AddCommandTest {
 
     @Test
     void execute_addsTaskAndPrintsMessage() {
-        ToDo todo = new ToDo("read book");
+        Todo todo = new Todo("read book");
         AddCommand cmd = new AddCommand(todo);
         String response = cmd.execute(tasks, ui, storage);
         assertEquals(1, tasks.size());

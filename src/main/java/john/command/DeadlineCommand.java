@@ -1,4 +1,9 @@
+
 package john.command;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import john.JohnException;
 import john.storage.Storage;
@@ -13,6 +18,7 @@ import john.ui.Ui;
 public class DeadlineCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
     private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
+    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private final String argument;
 
     /**
@@ -38,19 +44,18 @@ public class DeadlineCommand extends CommandBase {
         if (argument == null || argument.trim().isEmpty()) {
             throw new JohnException("The input of a deadline cannot be empty.");
         }
-        String[] res = argument.split("/by");
-        if (res.length > 2) {
+        String[] parts = argument.split("/by");
+        if (parts.length > 2) {
             throw new JohnException("Too many arguments. A deadline should only have a description and a due date.");
         }
-        String description = res[0].trim();
+        String description = parts[0].trim();
         if (description.isEmpty()) {
             throw new JohnException("The description of a deadline cannot be empty.");
         }
-        java.time.LocalDateTime deadline;
+        LocalDateTime deadline;
         try {
-            deadline = java.time.LocalDateTime.parse(res[1].trim(),
-                    java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-        } catch (java.time.format.DateTimeParseException e) {
+            deadline = LocalDateTime.parse(parts[1].trim(), INPUT_FORMATTER);
+        } catch (DateTimeParseException e) {
             throw new JohnException("Invalid date format. Please use the format: d/M/yyyy HHmm");
         }
         Task task = new Deadline(description, deadline);

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class TaskTest {
     @Test
     void markComplete_and_markIncomplete() {
-        ToDo todo = new ToDo("read book");
+        Todo todo = new Todo("read book");
         assertFalse(todo.toString().contains("[X]"));
         todo.markComplete();
         assertTrue(todo.toString().contains("[X]"));
