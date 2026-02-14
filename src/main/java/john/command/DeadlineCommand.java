@@ -16,8 +16,8 @@ import john.ui.Ui;
  * Command to add a deadline task to the task list.
  */
 public class DeadlineCommand extends CommandBase {
-    private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
-    private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
+    private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
+    private static final String COUNT_MESSAGE = "You now have %d tasks in your list, sir/madam.\n";
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private final String argument;
 
@@ -42,7 +42,7 @@ public class DeadlineCommand extends CommandBase {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument == null || argument.trim().isEmpty()) {
-            throw new JohnException("The input of a deadline cannot be empty.");
+            throw new JohnException("I beg your pardon, but the input for a deadline cannot be empty.");
         }
         String[] parts = argument.split("/by");
         if (parts.length > 2) {
@@ -50,13 +50,13 @@ public class DeadlineCommand extends CommandBase {
         }
         String description = parts[0].trim();
         if (description.isEmpty()) {
-            throw new JohnException("The description of a deadline cannot be empty.");
+            throw new JohnException("I apologize, sir/madam, but the description of a deadline cannot be empty.");
         }
         LocalDateTime deadline;
         try {
             deadline = LocalDateTime.parse(parts[1].trim(), INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new JohnException("Invalid date format. Please use the format: d/M/yyyy HHmm");
+            throw new JohnException("I must inform you that the date format is invalid. Please use: d/M/yyyy HHmm");
         }
         Task task = new Deadline(description, deadline);
         tasks.add(task);

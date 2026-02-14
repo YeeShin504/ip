@@ -18,6 +18,6 @@ public class ListCommand extends CommandBase {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        return "Here are the tasks in your list:\n" + tasks.toString();
+        return "Certainly. Here are the tasks on your agenda:\n" + tasks.toString();
     }
 }

@@ -15,8 +15,8 @@ import john.ui.Ui;
  * Command to add an event task to the task list.
  */
 public class EventCommand extends CommandBase {
-    private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
-    private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
+    private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
+    private static final String COUNT_MESSAGE = "You now have %d tasks in your list, sir/madam.\n";
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private final String argument;
 
@@ -42,7 +42,7 @@ public class EventCommand extends CommandBase {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument == null || argument.isEmpty()) {
-            throw new JohnException("The input of an event cannot be empty.");
+            throw new JohnException("I beg your pardon, but the input for an event cannot be empty.");
         }
         String[] parts = argument.split("/from");
         if (parts.length == 1) {
@@ -52,7 +52,7 @@ public class EventCommand extends CommandBase {
         }
         String description = parts[0].trim();
         if (description.isEmpty()) {
-            throw new JohnException("The description of an event cannot be empty.");
+            throw new JohnException("I apologize, sir/madam, but the description of an event cannot be empty.");
         }
         String[] dateParts = parts[1].trim().split("/to");
         if (dateParts.length == 1) {
@@ -71,7 +71,7 @@ public class EventCommand extends CommandBase {
                 throw new JohnException("The end date of an event cannot be before the start date.");
             }
         } catch (DateTimeParseException e) {
-            throw new JohnException("Invalid date format. Please use the format: d/M/yyyy HHmm");
+            throw new JohnException("I must inform you that the date format is invalid. Please use: d/M/yyyy HHmm");
         }
         Task task = new Event(description, startDate, endDate);
         tasks.add(task);

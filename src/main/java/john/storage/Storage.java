@@ -67,9 +67,11 @@ public class Storage {
         }
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Task task = Task.fromDataString(line);
-                tasks.add(task);
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {
+                    Task task = Task.fromDataString(line);
+                    tasks.add(task);
+                }
             }
         } catch (IOException e) {
             System.err.println("Warning: Could not load tasks from file at " + dataFile);

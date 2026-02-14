@@ -19,7 +19,7 @@ public class ExitCommand extends CommandBase {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         storage.saveTasks(tasks);
-        return "Bye. Hope to see you again soon!";
+        return "Very good, sir/madam. Your tasks have been saved.\nUntil next time, I remain at your service.";
     }
 
     /**

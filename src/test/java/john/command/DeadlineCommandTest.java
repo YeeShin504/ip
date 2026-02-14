@@ -40,7 +40,7 @@ class DeadlineCommandTest {
         DeadlineCommand cmd = new DeadlineCommand("return book /by 2/11/2026 1930");
         String response = cmd.execute(tasks, ui, storage);
         assertEquals(1, tasks.size());
-        assertTrue(response.contains("Got it. I've added this task:"));
+        assertTrue(response.contains("Very well. I have added this task to your agenda:"));
         assertTrue(response.contains("[D] [ ] return book"));
         assertTrue(response.contains("2 Nov 2026"));
     }
@@ -49,6 +49,6 @@ class DeadlineCommandTest {
     void execute_invalidDate_throwsException() {
         DeadlineCommand cmd = new DeadlineCommand("do homework /by no idea");
         Exception e = assertThrows(john.JohnException.class, () -> cmd.execute(tasks, ui, storage));
-        assertTrue(e.getMessage().contains("Invalid date format"));
+        assertTrue(e.getMessage().contains("the date format is invalid"));
     }
 }

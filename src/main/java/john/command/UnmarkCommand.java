@@ -35,6 +35,6 @@ public class UnmarkCommand extends CommandBase {
         Task task = tasks.get(Integer.parseInt(taskNum) - 1);
         task.markIncomplete();
         storage.saveTasks(tasks);
-        return "OK, I've marked this task as not done yet:\n    " + task;
+        return "Understood. I have marked this task as not yet completed:\n    " + task;
     }
 }

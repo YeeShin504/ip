@@ -41,8 +41,8 @@ class AddCommandTest {
         AddCommand cmd = new AddCommand(todo);
         String response = cmd.execute(tasks, ui, storage);
         assertEquals(1, tasks.size());
-        assertTrue(response.contains("Got it. I've added this task:"));
+        assertTrue(response.contains("Very well. I have added this task to your agenda:"));
         assertTrue(response.contains("[T] [ ] read book"));
-        assertTrue(response.contains("Now you have 1 tasks in the list."));
+        assertTrue(response.contains("You now have 1 tasks in your list, sir/madam."));
     }
 }

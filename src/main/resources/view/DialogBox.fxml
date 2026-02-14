@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.shape.Circle?>
 
 <fx:root alignment="TOP_RIGHT"
@@ -17,8 +18,12 @@
            text="Label" 
            wrapText="true" 
            minHeight="-Infinity"
-           maxWidth="320.0"
-           styleClass="user-label"/>
+           textOverrun="CLIP"
+           styleClass="user-label">
+      <HBox.hgrow>
+        <Priority fx:constant="ALWAYS" />
+      </HBox.hgrow>
+    </Label>
     <ImageView fx:id="displayPicture" 
                fitHeight="32.0" 
                fitWidth="32.0" 

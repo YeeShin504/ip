@@ -31,6 +31,6 @@ public class FindCommand extends CommandBase {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         TaskList matchingTasks = tasks.findTasksByKeyword(keyword);
-        return " Here are the matching tasks in your list:\n" + matchingTasks.toString();
+        return "Certainly. I have found the following matching tasks:\n" + matchingTasks.toString();
     }
 }

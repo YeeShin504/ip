@@ -11,7 +11,7 @@ class TodoTest {
     void toString_and_toDataString() {
         Todo todo = new Todo("read book");
         assertEquals("[T] [ ] read book", todo.toString());
-        assertEquals("T | 0 | read book\n", todo.toDataString());
+        assertEquals("T | 0 | read book", todo.toDataString());
     }
 
     @Test

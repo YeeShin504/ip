@@ -40,7 +40,8 @@ class ExitCommandTest {
 
         ExitCommand cmd = new ExitCommand();
         String response = cmd.execute(tasks, ui, storage);
-        assertTrue(response.contains("Bye. Hope to see you again soon!"));
+        assertTrue(response.contains("Your tasks have been saved."));
+        assertTrue(response.contains("Until next time, I remain at your service."));
 
         TaskList loadedTasks = storage.loadTasks();
         assertTrue(loadedTasks.get(0).toString().contains("[T] [ ] read book"));

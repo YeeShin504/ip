@@ -10,8 +10,8 @@ import john.ui.Ui;
  * Command to delete a task from the task list.
  */
 public class DeleteCommand extends CommandBase {
-    private static final String REMOVED_MESSAGE = "Noted. I've removed this task:\n    %s\n";
-    private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
+    private static final String REMOVED_MESSAGE = "Very well. I have removed this task from your agenda:\n    %s\n";
+    private static final String COUNT_MESSAGE = "You now have %d tasks remaining, sir/madam.\n";
     private final String taskNum;
 
     /**
