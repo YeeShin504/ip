@@ -1,8 +1,0 @@
-/* Error Message Highlighting */
-.error-dialog {
-    -fx-background-color: #ffebee;
-    -fx-border-color: #ef5350;
-    -fx-border-width: 2px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-}
