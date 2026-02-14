@@ -34,10 +34,12 @@ public class TodoCommand extends CommandBase {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        if (argument.trim().isEmpty()) {
+        if (argument == null || argument.trim().isEmpty()) {
             throw new JohnException("I apologize, but the description of a todo task cannot be empty.");
         }
-        Todo task = new Todo(argument);
+
+        String description = argument.trim();
+        Todo task = new Todo(description);
         tasks.add(task);
         storage.saveTasks(tasks);
         return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());

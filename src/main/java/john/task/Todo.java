@@ -49,14 +49,29 @@ public class Todo extends Task {
     public static Todo fromDataString(String dataString) {
         assert dataString != null : "Data string must not be null";
         String[] parts = dataString.split(" \\| ", 3);
-        assert parts.length == 3 : "Todo data string must have 3 parts";
+
+        if (parts.length != 3) {
+            throw new JohnException("Invalid Todo data format: expected 3 parts, got "
+                    + parts.length + " in: " + dataString);
+        }
+
         if (!parts[0].trim().equals("T")) {
             throw new JohnException("Data string is not of type Todo: " + dataString);
         }
-        boolean isCompleted = parts[1].trim().equals("1");
-        String description = parts[2].replace("\\|", "|");
-        Todo todo = new Todo(description, isCompleted);
-        return todo;
+
+        String statusStr = parts[1].trim();
+        if (!statusStr.equals("0") && !statusStr.equals("1")) {
+            throw new JohnException("Invalid completion status '" + statusStr
+                    + "' in Todo data: " + dataString);
+        }
+        boolean isCompleted = statusStr.equals("1");
+
+        String description = parts[2].replace("\\|", "|").trim();
+        if (description.isEmpty()) {
+            throw new JohnException("Todo description cannot be empty in data: " + dataString);
+        }
+
+        return new Todo(description, isCompleted);
     }
 
     @Override

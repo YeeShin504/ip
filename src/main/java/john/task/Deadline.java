@@ -63,15 +63,37 @@ public class Deadline extends Task {
     public static Deadline fromDataString(String dataString) {
         assert dataString != null : "Data string must not be null";
         String[] parts = dataString.split(" \\| ", 4);
-        assert parts.length == 4 : "Deadline data string must have 4 parts";
+
+        if (parts.length != 4) {
+            throw new JohnException("Invalid Deadline data format: expected 4 parts, got "
+                    + parts.length + " in: " + dataString);
+        }
+
         if (!parts[0].trim().equals("D")) {
             throw new JohnException("Data string is not of type Deadline: " + dataString);
         }
-        boolean isCompleted = parts[1].trim().equals("1");
-        String description = parts[2].replace("\\|", "|");
-        LocalDateTime deadline = LocalDateTime.parse(parts[3].trim());
-        Deadline deadlineTask = new Deadline(description, deadline, isCompleted);
-        return deadlineTask;
+
+        String statusStr = parts[1].trim();
+        if (!statusStr.equals("0") && !statusStr.equals("1")) {
+            throw new JohnException("Invalid completion status '" + statusStr
+                    + "' in Deadline data: " + dataString);
+        }
+        boolean isCompleted = statusStr.equals("1");
+
+        String description = parts[2].replace("\\|", "|").trim();
+        if (description.isEmpty()) {
+            throw new JohnException("Deadline description cannot be empty in data: " + dataString);
+        }
+
+        LocalDateTime deadline;
+        try {
+            deadline = LocalDateTime.parse(parts[3].trim());
+        } catch (Exception e) {
+            throw new JohnException("Invalid deadline date format in data: " + dataString
+                    + ". Error: " + e.getMessage());
+        }
+
+        return new Deadline(description, deadline, isCompleted);
     }
 
     @Override
@@ -82,5 +104,19 @@ public class Deadline extends Task {
         Deadline d = (Deadline) other;
         // Descending by default (most recent first)
         return d.deadline.compareTo(this.deadline);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        Deadline other = (Deadline) obj;
+        return deadline.equals(other.deadline);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(description, deadline);
     }
 }

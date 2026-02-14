@@ -2,8 +2,6 @@
 package john.command;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import john.JohnException;
 import john.storage.Storage;
@@ -11,6 +9,7 @@ import john.task.Deadline;
 import john.task.Task;
 import john.task.TaskList;
 import john.ui.Ui;
+import john.util.DateTimeValidator;
 
 /**
  * Command to add a deadline task to the task list.
@@ -18,7 +17,6 @@ import john.ui.Ui;
 public class DeadlineCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
     private static final String COUNT_MESSAGE = "You now have %d tasks in your list, sir/madam.\n";
-    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private final String argument;
 
     /**
@@ -41,26 +39,56 @@ public class DeadlineCommand extends CommandBase {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        if (argument == null || argument.trim().isEmpty()) {
-            throw new JohnException("I beg your pardon, but the input for a deadline cannot be empty.");
-        }
-        String[] parts = argument.split("/by");
-        if (parts.length > 2) {
-            throw new JohnException("Too many arguments. A deadline should only have a description and a due date.");
-        }
-        String description = parts[0].trim();
-        if (description.isEmpty()) {
-            throw new JohnException("I apologize, sir/madam, but the description of a deadline cannot be empty.");
-        }
-        LocalDateTime deadline;
-        try {
-            deadline = LocalDateTime.parse(parts[1].trim(), INPUT_FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new JohnException("I must inform you that the date format is invalid. Please use: d/M/yyyy HHmm");
-        }
+        validateArgumentNotEmpty();
+        String description = parseDescription();
+        String dateString = parseDateString();
+        LocalDateTime deadline = parseDateTime(dateString);
+
         Task task = new Deadline(description, deadline);
         tasks.add(task);
         storage.saveTasks(tasks);
         return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
+    }
+
+    private void validateArgumentNotEmpty() {
+        if (argument == null || argument.trim().isEmpty()) {
+            throw new JohnException("I beg your pardon, but the input for a deadline cannot be empty.");
+        }
+    }
+
+    private String parseDescription() {
+        validateParameterCount();
+
+        String[] parts = argument.split("/by");
+        if (parts.length == 1) {
+            throw new JohnException("The deadline date cannot be empty. Please use format: "
+                    + "deadline <description> /by <date>");
+        }
+
+        String description = parts[0].trim();
+        if (description.isEmpty()) {
+            throw new JohnException("I apologize, sir/madam, but the description of a deadline cannot be empty.");
+        }
+        return description;
+    }
+
+    private void validateParameterCount() {
+        int byCount = (argument.length() - argument.replace("/by", "").length()) / 3;
+        if (byCount > 1) {
+            throw new JohnException("You have specified the /by parameter multiple times. "
+                    + "Please provide only one deadline date.");
+        }
+    }
+
+    private String parseDateString() {
+        String[] parts = argument.split("/by");
+        String dateString = parts[1].trim();
+
+        DateTimeValidator.validateDateNotEmpty(dateString, "deadline");
+        return dateString;
+    }
+
+    private LocalDateTime parseDateTime(String dateString) {
+        return DateTimeValidator.parseDateTime(dateString, "deadline");
     }
 }

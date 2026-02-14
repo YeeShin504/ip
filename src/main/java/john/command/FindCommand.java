@@ -1,5 +1,6 @@
 package john.command;
 
+import john.JohnException;
 import john.storage.Storage;
 import john.task.TaskList;
 import john.ui.Ui;
@@ -27,10 +28,15 @@ public class FindCommand extends CommandBase {
      * @param ui      The user interface for displaying output.
      * @param storage The storage handler (not used in this command).
      * @return The response string
+     * @throws JohnException if the keyword is empty
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        TaskList matchingTasks = tasks.findTasksByKeyword(keyword);
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw new JohnException("I beg your pardon, but the search keyword cannot be empty.");
+        }
+
+        TaskList matchingTasks = tasks.findTasksByKeyword(keyword.trim());
         return "Certainly. I have found the following matching tasks:\n" + matchingTasks.toString();
     }
 }

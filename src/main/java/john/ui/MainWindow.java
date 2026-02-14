@@ -61,7 +61,6 @@ public class MainWindow extends AnchorPane {
             String response = john.getResponse(input);
             dialogContainer.getChildren().add(DialogBox.getJohnDialog(response, johnImage));
         } catch (Exception e) {
-            // Display error with special styling
             String errorMessage = (e instanceof JohnException)
                     ? e.getMessage()
                     : "An unexpected error occurred: " + e.getMessage();

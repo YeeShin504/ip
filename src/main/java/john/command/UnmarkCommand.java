@@ -32,7 +32,23 @@ public class UnmarkCommand extends CommandBase {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        Task task = tasks.get(Integer.parseInt(taskNum) - 1);
+        if (taskNum == null || taskNum.trim().isEmpty()) {
+            throw new JohnException("I beg your pardon, but you must specify a task number to unmark.");
+        }
+
+        int taskIndex;
+        try {
+            taskIndex = Integer.parseInt(taskNum.trim()) - 1;
+        } catch (NumberFormatException e) {
+            throw new JohnException("I'm afraid '" + taskNum + "' is not a valid task number. "
+                    + "Please provide a positive integer.");
+        }
+
+        if (taskIndex < 0) {
+            throw new JohnException("Task number must be positive. You provided: " + (taskIndex + 1));
+        }
+
+        Task task = tasks.get(taskIndex);
         task.markIncomplete();
         storage.saveTasks(tasks);
         return "Understood. I have marked this task as not yet completed:\n    " + task;

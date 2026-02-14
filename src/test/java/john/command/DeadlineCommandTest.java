@@ -49,6 +49,6 @@ class DeadlineCommandTest {
     void execute_invalidDate_throwsException() {
         DeadlineCommand cmd = new DeadlineCommand("do homework /by no idea");
         Exception e = assertThrows(john.JohnException.class, () -> cmd.execute(tasks, ui, storage));
-        assertTrue(e.getMessage().contains("the date format is invalid"));
+        assertTrue(e.getMessage().contains("date format is invalid"));
     }
 }

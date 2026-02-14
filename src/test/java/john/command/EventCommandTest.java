@@ -50,6 +50,6 @@ class EventCommandTest {
     void execute_invalidDate_throwsException() {
         EventCommand cmd = new EventCommand("time travel /from 02/11/2026 12:34 /to 11/02/2026 0000");
         Exception e = assertThrows(john.JohnException.class, () -> cmd.execute(tasks, ui, storage));
-        assertTrue(e.getMessage().contains("the date format is invalid"));
+        assertTrue(e.getMessage().contains("date format is invalid"));
     }
 }
