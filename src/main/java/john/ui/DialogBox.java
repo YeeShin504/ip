@@ -63,8 +63,14 @@ public class DialogBox extends HBox {
      * Applies styling for bot messages.
      */
     private void applyBotStyle() {
-        String labelStyle = "-fx-text-fill: #333333; -fx-font-family: 'Consolas', 'Monaco', 'Courier New', monospace; -fx-font-size: 11px; -fx-line-spacing: 2px;";
-        String boxStyle = "-fx-background-color: #ffffff; -fx-background-radius: 15px 15px 15px 5px; -fx-padding: 10px 15px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 1); -fx-border-color: #e0e0e0; -fx-border-radius: 15px 15px 15px 5px; -fx-border-width: 1px;";
+        String labelStyle = "-fx-text-fill: #333333; "
+            + "-fx-font-family: 'Consolas', 'Monaco', 'Courier New', monospace; "
+            + "-fx-font-size: 11px; -fx-line-spacing: 2px;";
+        String boxStyle = "-fx-background-color: #ffffff; "
+            + "-fx-background-radius: 15px 15px 15px 5px; -fx-padding: 10px 15px; "
+            + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 1); "
+            + "-fx-border-color: #e0e0e0; -fx-border-radius: 15px 15px 15px 5px; "
+            + "-fx-border-width: 1px;";
         dialog.setStyle(labelStyle);
         this.setStyle(boxStyle);
     }
@@ -73,8 +79,12 @@ public class DialogBox extends HBox {
      * Applies styling for user messages.
      */
     private void applyUserStyle() {
-        String labelStyle = "-fx-text-fill: #ffffff; -fx-font-family: 'Consolas', 'Monaco', 'Courier New', monospace; -fx-font-size: 11px; -fx-font-weight: normal;";
-        String boxStyle = "-fx-background-color: #007acc; -fx-background-radius: 15px 15px 5px 15px; -fx-padding: 10px 15px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 1);";
+        String labelStyle = "-fx-text-fill: #ffffff; "
+            + "-fx-font-family: 'Consolas', 'Monaco', 'Courier New', monospace; "
+            + "-fx-font-size: 11px; -fx-font-weight: normal;";
+        String boxStyle = "-fx-background-color: #007acc; "
+            + "-fx-background-radius: 15px 15px 5px 15px; -fx-padding: 10px 15px; "
+            + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 1);";
         dialog.setStyle(labelStyle);
         this.setStyle(boxStyle);
     }
@@ -83,8 +93,14 @@ public class DialogBox extends HBox {
      * Applies styling for error messages.
      */
     private void applyErrorStyle() {
-        String labelStyle = "-fx-text-fill: #c92a2a; -fx-font-family: 'Consolas', 'Monaco', 'Courier New', monospace; -fx-font-size: 11px; -fx-font-weight: 500;";
-        String boxStyle = "-fx-background-color: #fff0f0; -fx-background-radius: 15px 15px 15px 5px; -fx-padding: 10px 15px; -fx-effect: dropshadow(gaussian, rgba(200, 0, 0, 0.2), 5, 0, 0, 1); -fx-border-color: #ff6b6b; -fx-border-radius: 15px 15px 15px 5px; -fx-border-width: 1.5px;";
+        String labelStyle = "-fx-text-fill: #c92a2a; "
+            + "-fx-font-family: 'Consolas', 'Monaco', 'Courier New', monospace; "
+            + "-fx-font-size: 11px; -fx-font-weight: 500;";
+        String boxStyle = "-fx-background-color: #fff0f0; "
+            + "-fx-background-radius: 15px 15px 15px 5px; -fx-padding: 10px 15px; "
+            + "-fx-effect: dropshadow(gaussian, rgba(200, 0, 0, 0.2), 5, 0, 0, 1); "
+            + "-fx-border-color: #ff6b6b; -fx-border-radius: 15px 15px 15px 5px; "
+            + "-fx-border-width: 1.5px;";
         dialog.setStyle(labelStyle);
         this.setStyle(boxStyle);
     }
