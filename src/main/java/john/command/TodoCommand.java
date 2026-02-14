@@ -10,8 +10,8 @@ import john.ui.Ui;
  * Command to add a todo task to the task list.
  */
 public class TodoCommand extends CommandBase {
-    private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
-    private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
+    private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
+    private static final String COUNT_MESSAGE = "You now have %d tasks in your list, sir/madam.\n";
     private final String argument;
 
     /**
@@ -35,7 +35,7 @@ public class TodoCommand extends CommandBase {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (argument.trim().isEmpty()) {
-            throw new JohnException("The description of a todo cannot be empty");
+            throw new JohnException("I apologize, but the description of a todo task cannot be empty.");
         }
         Todo task = new Todo(argument);
         tasks.add(task);

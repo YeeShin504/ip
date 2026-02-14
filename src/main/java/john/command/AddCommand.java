@@ -9,8 +9,8 @@ import john.ui.Ui;
  * Command to add a new task to the task list.
  */
 public class AddCommand extends CommandBase {
-    private static final String ADDED_MESSAGE = "Got it. I've added this task:\n    %s\n";
-    private static final String COUNT_MESSAGE = "Now you have %d tasks in the list.\n";
+    private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
+    private static final String COUNT_MESSAGE = "You now have %d tasks in your list, sir/madam.\n";
     private final Task task;
 
     /**

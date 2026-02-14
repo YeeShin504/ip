@@ -40,7 +40,7 @@ class EventCommandTest {
         EventCommand cmd = new EventCommand("project meeting /from 11/2/2026 2359 /to 2/11/2026 0000");
         String response = cmd.execute(tasks, ui, storage);
         assertEquals(1, tasks.size());
-        assertTrue(response.contains("Got it. I've added this task:"));
+        assertTrue(response.contains("Very well. I have added this task to your agenda:"));
         assertTrue(response.contains("[E] [ ] project meeting"));
         assertTrue(response.contains("11 Feb 2026"));
         assertTrue(response.contains("2 Nov 2026"));
@@ -50,6 +50,6 @@ class EventCommandTest {
     void execute_invalidDate_throwsException() {
         EventCommand cmd = new EventCommand("time travel /from 02/11/2026 12:34 /to 11/02/2026 0000");
         Exception e = assertThrows(john.JohnException.class, () -> cmd.execute(tasks, ui, storage));
-        assertTrue(e.getMessage().contains("Invalid date format"));
+        assertTrue(e.getMessage().contains("the date format is invalid"));
     }
 }

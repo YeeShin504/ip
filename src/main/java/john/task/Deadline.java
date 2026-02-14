@@ -50,7 +50,7 @@ public class Deadline extends Task {
     public String toDataString() {
         String status = isCompleted ? "1" : "0";
         String escapedDescription = description.replace("|", "\\|");
-        return String.format("D | %s | %s | %s\n", status, escapedDescription, deadline.toString());
+        return String.format("D | %s | %s | %s", status, escapedDescription, deadline.toString());
     }
 
     /**

@@ -41,7 +41,7 @@ class DeleteCommandTest {
         DeleteCommand cmd = new DeleteCommand("1");
         String response = cmd.execute(tasks, ui, storage);
         assertEquals(0, tasks.size());
-        assertTrue(response.contains("Noted. I've removed this task:"));
+        assertTrue(response.contains("Very well. I have removed this task from your agenda:"));
         assertTrue(response.contains("[T] [ ] read book"));
     }
 }

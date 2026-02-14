@@ -41,7 +41,7 @@ class ListCommandTest {
     @Test
     void execute_printsTaskList() {
         String response = new ListCommand().execute(tasks, ui, storage);
-        assertTrue(response.contains("Here are the tasks in your list:"));
+        assertTrue(response.contains("Certainly. Here are the tasks on your agenda:"));
         assertTrue(response.contains("1. [T] [ ] read book"));
         assertTrue(response.contains("2. [T] [X] marked task"));
     }

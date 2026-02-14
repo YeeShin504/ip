@@ -36,7 +36,7 @@ public class Todo extends Task {
     public String toDataString() {
         String status = isCompleted ? "1" : "0";
         String escapedDescription = description.replace("|", "\\|");
-        return String.format("T | %s | %s\n", status, escapedDescription);
+        return String.format("T | %s | %s", status, escapedDescription);
     }
 
     /**

@@ -32,7 +32,7 @@ public class SortCommand extends CommandBase {
         tasks.sortByTypeAndDate(this.isLatestFirst);
         storage.saveTasks(tasks);
         String order = isLatestFirst ? "latest-first" : "earliest-first";
-        String sortMsg = String.format("Tasks have been sorted by type and %s order.\n", order);
+        String sortMsg = String.format("Very good. I have arranged your tasks by type and %s order.\n", order);
         String listMsg = new ListCommand().execute(tasks, ui, storage);
         return sortMsg + listMsg;
     }

@@ -15,7 +15,7 @@
     <children>
         <TextField fx:id="userInput"
                    onAction="#handleUserInput"
-                   promptText="Type your message here..."
+                   promptText="How may I assist you today, sir/madam?"
                    prefHeight="40.0"
                    AnchorPane.bottomAnchor="8.0"
                    AnchorPane.leftAnchor="8.0"

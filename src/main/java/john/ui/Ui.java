@@ -15,15 +15,16 @@ public class Ui {
      */
     public static String getWelcomeMessage() {
         String logo = """
-                       __      __       \s
+                       __      __
                       / /___  / /_  ____
                  __  / / __ \\/ __ \\/ __ \\
-                / /_/ / /_/ / / / / / / /\s
+                / /_/ / /_/ / / / / / / /
                 \\____/\\____/_/ /_/_/ /_/
                 """;
         StringBuilder sb = new StringBuilder();
-        sb.append("Hello! I'm\n").append(logo).append("\n");
-        sb.append("What can I do for you?\n");
+        sb.append("Good day! I am\n").append(logo).append("\n");
+        sb.append("Your personal butler, at your service.\n");
+        sb.append("How may I assist you today?\n");
         return sb.toString();
     }
 
@@ -47,7 +48,7 @@ public class Ui {
      * Shows an error message when loading tasks fails.
      */
     public void showLoadingError() {
-        System.out.println("Error loading tasks from file.");
+        System.out.println("I apologize, sir/madam. There was an error retrieving your tasks from storage.");
     }
 
     /**

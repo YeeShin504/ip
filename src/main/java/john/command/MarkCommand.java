@@ -36,6 +36,6 @@ public class MarkCommand extends CommandBase {
         Task task = tasks.get(Integer.parseInt(taskNum) - 1);
         task.markComplete();
         storage.saveTasks(tasks);
-        return "Nice! I've marked this task as done:\n    " + task;
+        return "Splendid! I have marked this task as completed:\n    " + task;
     }
 }

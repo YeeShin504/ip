@@ -53,6 +53,6 @@ public class Parser {
         default:
             break;
         }
-        throw new JohnException("I'm sorry, but I don't know what this means: " + input);
+        throw new JohnException("I beg your pardon, sir/madam, but I do not understand: " + input);
     }
 }

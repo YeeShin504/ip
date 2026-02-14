@@ -60,7 +60,7 @@ public class Event extends Task {
     public String toDataString() {
         String status = isCompleted ? "1" : "0";
         String escapedDescription = description.replace("|", "\\|");
-        return String.format("E | %s | %s | %s | %s\n", status, escapedDescription, startDate.toString(),
+        return String.format("E | %s | %s | %s | %s", status, escapedDescription, startDate.toString(),
                 endDate.toString());
     }
 
