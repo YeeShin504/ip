@@ -38,9 +38,14 @@ public class Storage {
      * @throws JohnException if there are file I/O errors
      */
     public void saveTasks(TaskList taskList) {
-        File dir = new File(dataDir);
+        ensureDirectoryExists();
+        validateDirectoryWritable();
+        validateFileWritable();
+        writeTasksToFile(taskList);
+    }
 
-        // Check if directory exists or can be created
+    private void ensureDirectoryExists() {
+        File dir = new File(dataDir);
         if (!dir.exists()) {
             boolean created = dir.mkdirs();
             if (!created) {
@@ -48,21 +53,25 @@ public class Storage {
                         + ". Please check write permissions.");
             }
         }
+    }
 
-        // Check if directory is writable
+    private void validateDirectoryWritable() {
+        File dir = new File(dataDir);
         if (!dir.canWrite()) {
             throw new JohnException("Cannot write to data directory at: " + dataDir
                     + ". Please check directory permissions.");
         }
+    }
 
+    private void validateFileWritable() {
         File file = new File(dataFile);
-
-        // Check if file exists and is writable
         if (file.exists() && !file.canWrite()) {
             throw new JohnException("Cannot write to data file at: " + dataFile
                     + ". Please check file permissions.");
         }
+    }
 
+    private void writeTasksToFile(TaskList taskList) {
         try (FileWriter writer = new FileWriter(dataFile)) {
             String allTasks = taskList.getAll().stream()
                 .map(Task::toDataString)
@@ -84,41 +93,49 @@ public class Storage {
         TaskList tasks = new TaskList();
         File file = new File(dataFile);
 
-        // If file doesn't exist, return empty list (normal on first run)
         if (!file.exists()) {
             return tasks;
         }
 
-        // Check if file is readable
+        validateFileReadable(file);
+        return readTasksFromFile(file);
+    }
+
+    private void validateFileReadable(File file) {
         if (!file.canRead()) {
             throw new JohnException("Cannot read data file at: " + dataFile
                     + ". Please check file permissions.");
         }
+    }
 
+    private TaskList readTasksFromFile(File file) {
+        TaskList tasks = new TaskList();
         try (Scanner scanner = new Scanner(file)) {
             int lineNumber = 0;
             while (scanner.hasNextLine()) {
                 lineNumber++;
                 String line = scanner.nextLine().trim();
 
-                // Skip empty lines
                 if (line.isEmpty()) {
                     continue;
                 }
 
-                try {
-                    Task task = Task.fromDataString(line);
-                    tasks.add(task);
-                } catch (Exception e) {
-                    throw new JohnException("Corrupted data file at line " + lineNumber
-                            + ": '" + line + "'. Error: " + e.getMessage());
-                }
+                parseAndAddTask(tasks, line, lineNumber);
             }
         } catch (IOException e) {
             throw new JohnException("Failed to load tasks from file: " + dataFile
                     + ". Error: " + e.getMessage());
         }
-
         return tasks;
+    }
+
+    private void parseAndAddTask(TaskList tasks, String line, int lineNumber) {
+        try {
+            Task task = Task.fromDataString(line);
+            tasks.add(task);
+        } catch (Exception e) {
+            throw new JohnException("Corrupted data file at line " + lineNumber
+                    + ": '" + line + "'. Error: " + e.getMessage());
+        }
     }
 }

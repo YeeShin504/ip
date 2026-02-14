@@ -46,6 +46,10 @@ class TodoCommandTest {
         assertEquals("read book", tasks.get(0).toString().replaceAll(".*\\] ", ""));
         assertTrue(response.contains("Very well. I have added this task to your agenda:"));
         assertTrue(response.contains("[T] [ ] read book"));
+        assertTrue(response.contains("You now have 1 task"));
+        System.out.println("===== FULL RESPONSE =====");
+        System.out.println(response);
+        System.out.println("===== END RESPONSE =====");
     }
 
     @Test

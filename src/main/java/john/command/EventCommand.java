@@ -1,8 +1,6 @@
 package john.command;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import john.JohnException;
 import john.storage.Storage;
@@ -10,6 +8,7 @@ import john.task.Event;
 import john.task.Task;
 import john.task.TaskList;
 import john.ui.Ui;
+import john.util.DateTimeValidator;
 
 /**
  * Command to add an event task to the task list.
@@ -17,7 +16,6 @@ import john.ui.Ui;
 public class EventCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
     private static final String COUNT_MESSAGE = "You now have %d tasks in your list, sir/madam.\n";
-    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private final String argument;
 
     /**
@@ -41,16 +39,27 @@ public class EventCommand extends CommandBase {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
+        validateArgumentNotEmpty();
+        String description = parseDescription();
+        String[] dateStrings = parseDateStrings();
+        LocalDateTime startDate = parseDateTime(dateStrings[0], "start");
+        LocalDateTime endDate = parseDateTime(dateStrings[1], "end");
+        validateDateOrder(startDate, endDate);
+
+        Task task = new Event(description, startDate, endDate);
+        tasks.add(task);
+        storage.saveTasks(tasks);
+        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
+    }
+
+    private void validateArgumentNotEmpty() {
         if (argument == null || argument.trim().isEmpty()) {
             throw new JohnException("I beg your pardon, but the input for an event cannot be empty.");
         }
+    }
 
-        // Check for duplicate /from parameters
-        int fromCount = (argument.length() - argument.replace("/from", "").length()) / 5;
-        if (fromCount > 1) {
-            throw new JohnException("You have specified the /from parameter multiple times. "
-                    + "Please provide only one start date.");
-        }
+    private String parseDescription() {
+        validateParameterCount("/from", 5, "start date");
 
         String[] parts = argument.split("/from");
         if (parts.length == 1) {
@@ -62,15 +71,16 @@ public class EventCommand extends CommandBase {
         if (description.isEmpty()) {
             throw new JohnException("I apologize, sir/madam, but the description of an event cannot be empty.");
         }
+        return description;
+    }
 
-        // Check for duplicate /to parameters
-        int toCount = (parts[1].length() - parts[1].replace("/to", "").length()) / 3;
-        if (toCount > 1) {
-            throw new JohnException("You have specified the /to parameter multiple times. "
-                    + "Please provide only one end date.");
-        }
+    private String[] parseDateStrings() {
+        String[] parts = argument.split("/from");
+        String datePart = parts[1].trim();
 
-        String[] dateParts = parts[1].trim().split("/to");
+        validateParameterCountInString(datePart, "/to", 3, "end date");
+
+        String[] dateParts = datePart.split("/to");
         if (dateParts.length == 1) {
             throw new JohnException("The end date of an event cannot be empty. "
                     + "Please use format: event <description> /from <start> /to <end>");
@@ -79,53 +89,33 @@ public class EventCommand extends CommandBase {
         String startString = dateParts[0].trim();
         String endString = dateParts[1].trim();
 
-        if (startString.isEmpty()) {
-            throw new JohnException("The start date cannot be empty. Please provide a date in format: d/M/yyyy HHmm");
-        }
-        if (endString.isEmpty()) {
-            throw new JohnException("The end date cannot be empty. Please provide a date in format: d/M/yyyy HHmm");
-        }
+        DateTimeValidator.validateDateNotEmpty(startString, "start");
+        DateTimeValidator.validateDateNotEmpty(endString, "end");
 
-        LocalDateTime startDate;
-        LocalDateTime endDate;
-        try {
-            startDate = LocalDateTime.parse(startString, INPUT_FORMATTER);
-        } catch (DateTimeParseException e) {
-            String errorMsg = "I must inform you that the start date format is invalid. ";
-            if (e.getMessage().contains("Invalid date")) {
-                errorMsg += "The date '" + startString + "' does not exist. ";
-            } else {
-                errorMsg += "Please use the format: d/M/yyyy HHmm (e.g., 25/12/2024 1800). ";
-            }
-            errorMsg += "Error: " + e.getMessage();
-            throw new JohnException(errorMsg);
-        }
+        return new String[]{startString, endString};
+    }
 
-        try {
-            endDate = LocalDateTime.parse(endString, INPUT_FORMATTER);
-        } catch (DateTimeParseException e) {
-            String errorMsg = "I must inform you that the end date format is invalid. ";
-            if (e.getMessage().contains("Invalid date")) {
-                errorMsg += "The date '" + endString + "' does not exist. ";
-            } else {
-                errorMsg += "Please use the format: d/M/yyyy HHmm (e.g., 25/12/2024 1800). ";
-            }
-            errorMsg += "Error: " + e.getMessage();
-            throw new JohnException(errorMsg);
+    private void validateParameterCount(String parameter, int paramLength, String paramName) {
+        int count = (argument.length() - argument.replace(parameter, "").length()) / paramLength;
+        if (count > 1) {
+            throw new JohnException("You have specified the " + parameter + " parameter multiple times. "
+                    + "Please provide only one " + paramName + ".");
         }
+    }
 
-        if (endDate.isBefore(startDate)) {
-            throw new JohnException("The end date of an event cannot be before the start date.");
+    private void validateParameterCountInString(String text, String parameter, int paramLength, String paramName) {
+        int count = (text.length() - text.replace(parameter, "").length()) / paramLength;
+        if (count > 1) {
+            throw new JohnException("You have specified the " + parameter + " parameter multiple times. "
+                    + "Please provide only one " + paramName + ".");
         }
+    }
 
-        if (endDate.isEqual(startDate)) {
-            throw new JohnException("The end date of an event cannot be the same as the start date. "
-                    + "Please provide different start and end times.");
-        }
+    private LocalDateTime parseDateTime(String dateString, String dateType) {
+        return DateTimeValidator.parseDateTime(dateString, dateType);
+    }
 
-        Task task = new Event(description, startDate, endDate);
-        tasks.add(task);
-        storage.saveTasks(tasks);
-        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
+    private void validateDateOrder(LocalDateTime startDate, LocalDateTime endDate) {
+        DateTimeValidator.validateDateOrder(startDate, endDate);
     }
 }
