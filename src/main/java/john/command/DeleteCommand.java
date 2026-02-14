@@ -35,7 +35,23 @@ public class DeleteCommand extends CommandBase {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        Task task = tasks.get(Integer.parseInt(taskNum) - 1);
+        if (taskNum == null || taskNum.trim().isEmpty()) {
+            throw new JohnException("I beg your pardon, but you must specify a task number to delete.");
+        }
+
+        int taskIndex;
+        try {
+            taskIndex = Integer.parseInt(taskNum.trim()) - 1;
+        } catch (NumberFormatException e) {
+            throw new JohnException("I'm afraid '" + taskNum + "' is not a valid task number. "
+                    + "Please provide a positive integer.");
+        }
+
+        if (taskIndex < 0) {
+            throw new JohnException("Task number must be positive. You provided: " + (taskIndex + 1));
+        }
+
+        Task task = tasks.get(taskIndex);
         tasks.remove(task);
         storage.saveTasks(tasks);
         return String.format(REMOVED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());

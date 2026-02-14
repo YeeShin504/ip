@@ -41,38 +41,88 @@ public class EventCommand extends CommandBase {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        if (argument == null || argument.isEmpty()) {
+        if (argument == null || argument.trim().isEmpty()) {
             throw new JohnException("I beg your pardon, but the input for an event cannot be empty.");
         }
+
+        // Check for duplicate /from parameters
+        int fromCount = (argument.length() - argument.replace("/from", "").length()) / 5;
+        if (fromCount > 1) {
+            throw new JohnException("You have specified the /from parameter multiple times. "
+                    + "Please provide only one start date.");
+        }
+
         String[] parts = argument.split("/from");
         if (parts.length == 1) {
-            throw new JohnException("The start date of an event cannot be empty.");
-        } else if (parts.length > 2) {
-            throw new JohnException("Too many arguments. An event should only have a start date");
+            throw new JohnException("The start date of an event cannot be empty. "
+                    + "Please use format: event <description> /from <start> /to <end>");
         }
+
         String description = parts[0].trim();
         if (description.isEmpty()) {
             throw new JohnException("I apologize, sir/madam, but the description of an event cannot be empty.");
         }
+
+        // Check for duplicate /to parameters
+        int toCount = (parts[1].length() - parts[1].replace("/to", "").length()) / 3;
+        if (toCount > 1) {
+            throw new JohnException("You have specified the /to parameter multiple times. "
+                    + "Please provide only one end date.");
+        }
+
         String[] dateParts = parts[1].trim().split("/to");
         if (dateParts.length == 1) {
-            throw new JohnException("The end date of an event cannot be empty.");
-        } else if (dateParts.length > 2) {
-            throw new JohnException("Too many arguments. An event should only have an end date.");
+            throw new JohnException("The end date of an event cannot be empty. "
+                    + "Please use format: event <description> /from <start> /to <end>");
         }
+
+        String startString = dateParts[0].trim();
+        String endString = dateParts[1].trim();
+
+        if (startString.isEmpty()) {
+            throw new JohnException("The start date cannot be empty. Please provide a date in format: d/M/yyyy HHmm");
+        }
+        if (endString.isEmpty()) {
+            throw new JohnException("The end date cannot be empty. Please provide a date in format: d/M/yyyy HHmm");
+        }
+
         LocalDateTime startDate;
         LocalDateTime endDate;
         try {
-            startDate = LocalDateTime.parse(dateParts[0].trim(),
-                INPUT_FORMATTER);
-            endDate = LocalDateTime.parse(dateParts[1].trim(),
-                INPUT_FORMATTER);
-            if (endDate.isBefore(startDate)) {
-                throw new JohnException("The end date of an event cannot be before the start date.");
-            }
+            startDate = LocalDateTime.parse(startString, INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new JohnException("I must inform you that the date format is invalid. Please use: d/M/yyyy HHmm");
+            String errorMsg = "I must inform you that the start date format is invalid. ";
+            if (e.getMessage().contains("Invalid date")) {
+                errorMsg += "The date '" + startString + "' does not exist. ";
+            } else {
+                errorMsg += "Please use the format: d/M/yyyy HHmm (e.g., 25/12/2024 1800). ";
+            }
+            errorMsg += "Error: " + e.getMessage();
+            throw new JohnException(errorMsg);
         }
+
+        try {
+            endDate = LocalDateTime.parse(endString, INPUT_FORMATTER);
+        } catch (DateTimeParseException e) {
+            String errorMsg = "I must inform you that the end date format is invalid. ";
+            if (e.getMessage().contains("Invalid date")) {
+                errorMsg += "The date '" + endString + "' does not exist. ";
+            } else {
+                errorMsg += "Please use the format: d/M/yyyy HHmm (e.g., 25/12/2024 1800). ";
+            }
+            errorMsg += "Error: " + e.getMessage();
+            throw new JohnException(errorMsg);
+        }
+
+        if (endDate.isBefore(startDate)) {
+            throw new JohnException("The end date of an event cannot be before the start date.");
+        }
+
+        if (endDate.isEqual(startDate)) {
+            throw new JohnException("The end date of an event cannot be the same as the start date. "
+                    + "Please provide different start and end times.");
+        }
+
         Task task = new Event(description, startDate, endDate);
         tasks.add(task);
         storage.saveTasks(tasks);

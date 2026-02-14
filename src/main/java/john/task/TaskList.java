@@ -69,10 +69,28 @@ public class TaskList {
      * Adds a task to the list.
      *
      * @param task The task to add
+     * @throws JohnException if the task is a duplicate
      */
     public void add(Task task) {
         assert task != null : "Cannot add null task";
+
+        // Check for duplicates
+        if (hasDuplicate(task)) {
+            throw new JohnException("This task already exists in your list. "
+                    + "Duplicate tasks are not allowed.");
+        }
+
         tasks.add(task);
+    }
+
+    /**
+     * Checks if a duplicate task already exists in the list.
+     *
+     * @param task The task to check
+     * @return true if a duplicate exists
+     */
+    private boolean hasDuplicate(Task task) {
+        return tasks.stream().anyMatch(t -> t.equals(task));
     }
 
     /**

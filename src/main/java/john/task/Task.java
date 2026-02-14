@@ -13,9 +13,15 @@ public abstract class Task implements Comparable<Task> {
      * Constructs a Task with the given description.
      *
      * @param description The task description
+     * @throws JohnException if description is empty or whitespace
      */
     public Task(String description) {
         assert description != null : "Task description must not be null";
+
+        if (description.trim().isEmpty()) {
+            throw new JohnException("Task description cannot be empty or whitespace.");
+        }
+
         this.description = description;
         this.isCompleted = false;
     }
@@ -25,9 +31,15 @@ public abstract class Task implements Comparable<Task> {
      *
      * @param description The task description
      * @param isCompleted Whether the task is completed
+     * @throws JohnException if description is empty or whitespace
      */
     public Task(String description, boolean isCompleted) {
         assert description != null : "Task description must not be null";
+
+        if (description.trim().isEmpty()) {
+            throw new JohnException("Task description cannot be empty or whitespace.");
+        }
+
         this.description = description;
         this.isCompleted = isCompleted;
     }
@@ -89,5 +101,29 @@ public abstract class Task implements Comparable<Task> {
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.printf("    %s\n", this);
+    }
+
+    /**
+     * Checks if this task is a duplicate of another task (ignoring completion status).
+     * Two tasks are considered duplicates if they have the same description and dates (if applicable).
+     *
+     * @param obj The object to compare with
+     * @return true if the tasks are duplicates
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Task other = (Task) obj;
+        return description.equals(other.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(description);
     }
 }

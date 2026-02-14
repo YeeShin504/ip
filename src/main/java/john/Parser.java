@@ -26,9 +26,24 @@ public class Parser {
      */
     public static CommandBase parse(String input) {
         assert input != null : "Input to Parser.parse must not be null";
-        String[] parts = input.trim().split(" ", 2);
+
+        // Normalize whitespace: trim leading/trailing spaces and collapse multiple spaces
+        String normalized = input.trim().replaceAll("\\s+", " ");
+
+        if (normalized.isEmpty()) {
+            throw new JohnException("I beg your pardon, but the command cannot be empty.");
+        }
+
+        String[] parts = normalized.split(" ", 2);
+        String commandWord = parts[0];
         String argument = parts.length > 1 ? parts[1] : "";
-        Command cmd = Command.fromString(parts[0]);
+
+        // Validate command word contains only alphanumeric characters
+        if (!commandWord.matches("[a-zA-Z0-9]+")) {
+            throw new JohnException("I'm sorry, but the command contains invalid characters: " + commandWord);
+        }
+
+        Command cmd = Command.fromString(commandWord);
         switch (cmd) {
         case LIST:
             return new ListCommand();

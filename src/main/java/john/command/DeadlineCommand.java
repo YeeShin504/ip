@@ -44,20 +44,45 @@ public class DeadlineCommand extends CommandBase {
         if (argument == null || argument.trim().isEmpty()) {
             throw new JohnException("I beg your pardon, but the input for a deadline cannot be empty.");
         }
-        String[] parts = argument.split("/by");
-        if (parts.length > 2) {
-            throw new JohnException("Too many arguments. A deadline should only have a description and a due date.");
+
+        // Check for duplicate /by parameters
+        int byCount = (argument.length() - argument.replace("/by", "").length()) / 3;
+        if (byCount > 1) {
+            throw new JohnException("You have specified the /by parameter multiple times. "
+                    + "Please provide only one deadline date.");
         }
+
+        String[] parts = argument.split("/by");
+        if (parts.length == 1) {
+            throw new JohnException("The deadline date cannot be empty. Please use format: "
+                    + "deadline <description> /by <date>");
+        }
+
         String description = parts[0].trim();
         if (description.isEmpty()) {
             throw new JohnException("I apologize, sir/madam, but the description of a deadline cannot be empty.");
         }
+
+        String dateString = parts[1].trim();
+        if (dateString.isEmpty()) {
+            throw new JohnException("The deadline date cannot be empty. "
+                    + "Please provide a date in format: d/M/yyyy HHmm");
+        }
+
         LocalDateTime deadline;
         try {
-            deadline = LocalDateTime.parse(parts[1].trim(), INPUT_FORMATTER);
+            deadline = LocalDateTime.parse(dateString, INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new JohnException("I must inform you that the date format is invalid. Please use: d/M/yyyy HHmm");
+            String errorMsg = "I must inform you that the date format is invalid. ";
+            if (e.getMessage().contains("Invalid date")) {
+                errorMsg += "The date '" + dateString + "' does not exist (e.g., February 30th is invalid). ";
+            } else {
+                errorMsg += "Please use the format: d/M/yyyy HHmm (e.g., 25/12/2024 1800). ";
+            }
+            errorMsg += "Error: " + e.getMessage();
+            throw new JohnException(errorMsg);
         }
+
         Task task = new Deadline(description, deadline);
         tasks.add(task);
         storage.saveTasks(tasks);
