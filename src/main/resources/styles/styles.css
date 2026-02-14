@@ -1,0 +1,131 @@
+/* Main Window Styling */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica", "Arial", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f5f5f5;
+}
+
+/* User Message Container */
+.user-dialog {
+    -fx-background-color: #007acc;
+    -fx-background-radius: 15px 15px 5px 15px;
+    -fx-padding: 10px 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 1);
+}
+
+/* Bot Message Container */
+.bot-dialog {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15px 15px 15px 5px;
+    -fx-padding: 10px 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 1);
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 15px 15px 15px 5px;
+    -fx-border-width: 1px;
+}
+
+/* Error Message Container */
+.error-dialog {
+    -fx-background-color: #fff0f0;
+    -fx-background-radius: 15px 15px 15px 5px;
+    -fx-padding: 10px 15px;
+    -fx-effect: dropshadow(gaussian, rgba(200, 0, 0, 0.2), 5, 0, 0, 1);
+    -fx-border-color: #ff6b6b;
+    -fx-border-radius: 15px 15px 15px 5px;
+    -fx-border-width: 1.5px;
+}
+
+/* User Message Text */
+.user-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
+    -fx-font-weight: normal;
+}
+
+/* Bot Message Text */
+.bot-label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+    -fx-line-spacing: 2px;
+}
+
+/* Error Message Text */
+.error-label {
+    -fx-text-fill: #c92a2a;
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+}
+
+/* Profile Picture Styling */
+.profile-picture {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+/* Input TextField */
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d0d0d0;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused {
+    -fx-border-color: #007acc;
+    -fx-border-width: 2px;
+    -fx-background-color: #ffffff;
+}
+
+/* Send Button */
+.button {
+    -fx-background-color: #007acc;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-padding: 8px 16px;
+}
+
+.button:hover {
+    -fx-background-color: #005a9e;
+}
+
+.button:pressed {
+    -fx-background-color: #004578;
+}
+
+/* ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #f5f5f5;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 5px;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #a0a0a0;
+}
+
+/* VBox Container for Messages */
+#dialogContainer {
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 10px;
+    -fx-spacing: 8px;
+}

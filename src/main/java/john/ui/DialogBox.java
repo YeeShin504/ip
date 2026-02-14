@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 /**
  * A DialogBox is a custom control representing a dialog box consisting of an
@@ -44,6 +45,7 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+        dialog.setMinHeight(Region.USE_PREF_SIZE);
     }
 
     /**
@@ -58,6 +60,33 @@ public class DialogBox extends HBox {
     }
 
     /**
+     * Applies styling for bot messages.
+     */
+    private void applyBotStyle() {
+        dialog.getStyleClass().clear();
+        dialog.getStyleClass().add("bot-label");
+        this.getStyleClass().add("bot-dialog");
+    }
+
+    /**
+     * Applies styling for user messages.
+     */
+    private void applyUserStyle() {
+        dialog.getStyleClass().clear();
+        dialog.getStyleClass().add("user-label");
+        this.getStyleClass().add("user-dialog");
+    }
+
+    /**
+     * Applies styling for error messages.
+     */
+    private void applyErrorStyle() {
+        dialog.getStyleClass().clear();
+        dialog.getStyleClass().add("error-label");
+        this.getStyleClass().add("error-dialog");
+    }
+
+    /**
      * Creates a dialog box for the user.
      *
      * @param text The text to display in the dialog box
@@ -65,7 +94,9 @@ public class DialogBox extends HBox {
      * @return A new DialogBox instance for the user
      */
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
+        db.applyUserStyle();
+        return db;
     }
 
     /**
@@ -78,6 +109,21 @@ public class DialogBox extends HBox {
     public static DialogBox getJohnDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.applyBotStyle();
+        return db;
+    }
+
+    /**
+     * Creates a dialog box for error messages from John.
+     *
+     * @param text The error text to display in the dialog box
+     * @param img  The image to display in the dialog box
+     * @return A new DialogBox instance for error messages
+     */
+    public static DialogBox getErrorDialog(String text, Image img) {
+        var db = new DialogBox(text, img);
+        db.flip();
+        db.applyErrorStyle();
         return db;
     }
 }

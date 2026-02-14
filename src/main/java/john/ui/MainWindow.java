@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import john.John;
+import john.JohnException;
 
 /**
  * Controller for the main GUI.
@@ -54,10 +55,19 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = john.getResponse(input);
-        dialogContainer.getChildren().addAll(
-            DialogBox.getUserDialog(input, userImage),
-            DialogBox.getJohnDialog(response, johnImage));
+        dialogContainer.getChildren().add(DialogBox.getUserDialog(input, userImage));
+
+        try {
+            String response = john.getResponse(input);
+            dialogContainer.getChildren().add(DialogBox.getJohnDialog(response, johnImage));
+        } catch (Exception e) {
+            // Display error with special styling
+            String errorMessage = (e instanceof JohnException)
+                    ? e.getMessage()
+                    : "An unexpected error occurred: " + e.getMessage();
+            dialogContainer.getChildren().add(DialogBox.getErrorDialog(errorMessage, johnImage));
+        }
+
         userInput.clear();
 
         if (john.isLastCommandExit()) {

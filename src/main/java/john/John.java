@@ -66,15 +66,12 @@ public class John {
      *
      * @param input The user input string
      * @return The response string from John
+     * @throws JohnException if there is an error processing the command
      */
-    public String getResponse(String input) {
-        try {
-            CommandBase c = ui.readCommand(input);
-            lastCommand = c;
-            return c.execute(tasks, ui, storage);
-        } catch (JohnException e) {
-            return e.getMessage();
-        }
+    public String getResponse(String input) throws JohnException {
+        CommandBase c = ui.readCommand(input);
+        lastCommand = c;
+        return c.execute(tasks, ui, storage);
     }
 
     /**
