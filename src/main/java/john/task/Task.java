@@ -78,29 +78,31 @@ public abstract class Task implements Comparable<Task> {
     }
 
     /**
-     * Marks the task as completed and displays a message.
+     * Marks the task as completed and returns a message.
+     *
+     * @return The message indicating the task's completion status
      */
-    public void markComplete() {
+    public String markComplete() {
         if (isCompleted) {
-            System.out.println("This task has already been marked as done:");
+            return "This task has already been marked as done:\n    " + this;
         } else {
             isCompleted = true;
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.printf("    %s\n", this);
+            return "Nice! I've marked this task as done:\n    " + this;
         }
     }
 
     /**
-     * Marks the task as incomplete and displays a message.
+     * Marks the task as incomplete and returns a message.
+     *
+     * @return The message indicating the task's incompletion status
      */
-    public void markIncomplete() {
+    public String markIncomplete() {
         if (!isCompleted) {
-            System.out.println("This task has already been marked as not done:");
+            return "This task has already been marked as not done:\n    " + this;
         } else {
             isCompleted = false;
-            System.out.println("OK, I've marked this task as not done yet:");
+            return "OK, I've marked this task as not done yet:\n    " + this;
         }
-        System.out.printf("    %s\n", this);
     }
 
     /**

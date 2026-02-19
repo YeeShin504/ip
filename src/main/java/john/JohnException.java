@@ -14,7 +14,7 @@ public class JohnException extends IllegalArgumentException {
     }
 
     /**
-     * Returns the error message with a custom prefix.
+     * Retrieves the error message with a custom prefix.
      *
      * @return the error message
      */

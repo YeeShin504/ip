@@ -34,8 +34,7 @@ public class Main extends Application {
     }
 
     /**
-     * Main method - entry point for the application.
-     * Run with --cli argument for CLI mode, otherwise launches GUI.
+     * Launches the application in GUI mode by default, or CLI mode if --cli argument is provided.
      *
      * @param args Command line arguments
      */

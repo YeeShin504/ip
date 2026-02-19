@@ -126,7 +126,7 @@ public class DialogBox extends HBox {
      * @return A new DialogBox instance for John
      */
     public static DialogBox getJohnDialog(String text, Image img) {
-        var db = new DialogBox(text + "\n", img);
+        var db = new DialogBox(text + "\n\n", img);
         db.flip();
         db.applyBotStyle();
         return db;

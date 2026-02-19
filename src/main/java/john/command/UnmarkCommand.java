@@ -49,8 +49,8 @@ public class UnmarkCommand extends CommandBase {
         }
 
         Task task = tasks.get(taskIndex);
-        task.markIncomplete();
+        String message = task.markIncomplete();
         storage.saveTasks(tasks);
-        return "Understood. I have marked this task as not yet completed:\n    " + task;
+        return message;
     }
 }

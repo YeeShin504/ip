@@ -1,11 +1,10 @@
 package john.command;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,10 +37,9 @@ class MarkCommandTest {
     @Test
     void execute_marksTaskAndPrintsMessage() {
         MarkCommand cmd = new MarkCommand("1");
-        cmd.execute(tasks, ui, storage);
+        String response = cmd.execute(tasks, ui, storage);
         assertTrue(tasks.get(0).toString().contains("[X]"));
-        String output = outContent.toString();
-        assertTrue(output.contains("Nice! I've marked this task as done:"));
-        assertTrue(output.contains("[T] [X] read book"));
+        assertTrue(response.contains("Nice! I've marked this task as done:"));
+        assertTrue(response.contains("[T] [X] read book"));
     }
 }

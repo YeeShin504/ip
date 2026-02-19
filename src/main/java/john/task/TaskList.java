@@ -2,6 +2,8 @@ package john.task;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -94,7 +96,7 @@ public class TaskList {
     }
 
     /**
-     * Gets the task at the specified index.
+     * Retrieves the task at the specified index.
      *
      * @param idx The index of the task
      * @return The task at the given index
@@ -150,6 +152,23 @@ public class TaskList {
                 .filter(task -> task != null)
                 .filter(task -> task.description.contains(keyword))
         );
+    }
+
+    /**
+     * Finds tasks containing the given keyword and returns a map of their original indexes and tasks.
+     *
+     * @param keyword The keyword to search for in task descriptions.
+     * @return A map where the key is the original 1-based index and the value is the matching task.
+     */
+    public Map<Integer, Task> findTasksWithIndexes(String keyword) {
+        return IntStream.range(0, tasks.size())
+            .filter(i -> tasks.get(i).description.contains(keyword))
+            .boxed()
+            .collect(Collectors.toMap(
+                i -> i + 1, // Convert 0-based index to 1-based
+                tasks::get, (existing, replacement) -> existing,
+                LinkedHashMap::new // Preserve insertion order
+            ));
     }
 
     /**
