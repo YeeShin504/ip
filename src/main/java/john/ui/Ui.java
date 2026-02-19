@@ -8,10 +8,23 @@ import john.command.CommandBase;
  * Handles user interface interactions for the John application.
  */
 public class Ui {
+    private static final String SYNTAX_GUIDE = """
+        Here are some commands you can try:
+          - list: View all tasks
+          - todo <description>: Add a ToDo task
+          - deadline <description> /by <date>: Add a Deadline task
+          - event <description> /from <start> /to <end>: Add an Event task
+          - mark <task number>: Mark a task as done
+          - unmark <task number>: Mark a task as not done
+          - delete <task number>: Remove a task
+          - find <keyword>: Search for tasks containing a keyword
+          - sort [/latest]: Sort tasks by type and date
+          - bye: Exit the application
+        """;
     private final Scanner sc = new Scanner(System.in);
 
     /**
-     * Returns the welcome message as a String (for GUI use).
+     * Retrieves the welcome message as a String for display in the GUI.
      */
     public static String getWelcomeMessage() {
         String logo = """
@@ -25,6 +38,7 @@ public class Ui {
         sb.append("Good day! I am\n").append(logo).append("\n");
         sb.append("Your personal butler, at your service.\n");
         sb.append("How may I assist you today?\n");
+        sb.append(SYNTAX_GUIDE);
         return sb.toString();
     }
 

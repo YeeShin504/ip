@@ -53,7 +53,7 @@ public class John {
     }
 
     /**
-     * Main method to start the John application.
+     * Starts the John application from the command line.
      *
      * @param args Command line arguments
      */
@@ -62,7 +62,7 @@ public class John {
     }
 
     /**
-     * Gets the response for a given user input.
+     * Processes the user input and generates a response.
      *
      * @param input The user input string
      * @return The response string from John

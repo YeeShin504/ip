@@ -1,7 +1,10 @@
 package john.command;
 
+import java.util.Map;
+
 import john.JohnException;
 import john.storage.Storage;
+import john.task.Task;
 import john.task.TaskList;
 import john.ui.Ui;
 
@@ -36,7 +39,14 @@ public class FindCommand extends CommandBase {
             throw new JohnException("I beg your pardon, but the search keyword cannot be empty.");
         }
 
-        TaskList matchingTasks = tasks.findTasksByKeyword(keyword.trim());
-        return "Certainly. I have found the following matching tasks:\n" + matchingTasks.toString();
+        String trimmedKeyword = keyword.trim();
+        Map<Integer, Task> matchingTasks = tasks.findTasksWithIndexes(trimmedKeyword);
+        StringBuilder result = new StringBuilder("Certainly. I have found the following matching tasks:\n");
+
+        matchingTasks.forEach((index, task) ->
+            result.append(index).append(". ").append(task).append("\n")
+        );
+
+        return result.toString().trim();
     }
 }

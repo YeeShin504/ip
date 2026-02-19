@@ -50,8 +50,8 @@ public class MarkCommand extends CommandBase {
         }
 
         Task task = tasks.get(taskIndex);
-        task.markComplete();
+        String message = task.markComplete();
         storage.saveTasks(tasks);
-        return "Splendid! I have marked this task as completed:\n    " + task;
+        return message;
     }
 }
