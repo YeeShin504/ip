@@ -73,6 +73,10 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         if (john.isLastCommandExit()) {
+            // Disable user input and send button
+            userInput.setDisable(true);
+            sendButton.setDisable(true);
+
             PauseTransition delay = new PauseTransition(Duration.seconds(5));
             delay.setOnFinished(event -> Platform.exit());
             delay.play();

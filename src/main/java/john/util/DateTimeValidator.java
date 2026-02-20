@@ -62,13 +62,24 @@ public class DateTimeValidator {
     }
 
     private static String buildDateErrorMessage(String dateString, String dateType, DateTimeParseException e) {
-        String errorMsg = "I must inform you that the " + dateType + " date format is invalid. ";
+        StringBuilder errorMsg = new StringBuilder();
+        errorMsg.append(dateType.substring(0, 1).toUpperCase())
+                .append(dateType.substring(1))
+                .append(" date format is invalid. ");
         if (e.getMessage().contains("Invalid date")) {
-            errorMsg += "The date '" + dateString + "' does not exist (e.g., February 30th is invalid). ";
+            errorMsg.append("The date '").append(dateString).append("' does not exist (e.g., February 30th is invalid). ");
         } else {
-            errorMsg += "Please use the format: d/M/yyyy HHmm (e.g., 25/12/2024 1800). ";
+            errorMsg.append("Please use the format: d/M/yyyy HHmm (e.g., 25/12/2024 1800). ");
         }
-        errorMsg += "Error: " + e.getMessage();
-        return errorMsg;
+        int errorIndex = e.getErrorIndex();
+        if (errorIndex >= 0 && errorIndex < dateString.length()) {
+            errorMsg.append("\nError here: ").append(dateString).append("\n");
+            int ERROR_OFFSET = ("Error here: ").length();
+            for (int i = 0; i < ERROR_OFFSET + errorIndex; i++) {
+                errorMsg.append(' ');
+            }
+            errorMsg.append("^\n\n");
+        }
+        return errorMsg.toString();
     }
 }
