@@ -2,6 +2,8 @@
 package john.command;
 
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import john.JohnException;
 import john.storage.Storage;
@@ -15,6 +17,9 @@ import john.util.DateTimeValidator;
  * Command to add a deadline task to the task list.
  */
 public class DeadlineCommand extends CommandBase {
+    private static final Pattern DEADLINE_PATTERN = Pattern.compile(
+        "^(.*?)\\s*/by\\s*(.*)$",
+        Pattern.CASE_INSENSITIVE);
     private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
     private static final String COUNT_MESSAGE = "You now have %d tasks in your list, %s.\n";
     private final String argument;
@@ -42,7 +47,7 @@ public class DeadlineCommand extends CommandBase {
         validateArgumentNotEmpty();
         String description = parseDescription();
         String dateString = parseDateString();
-        LocalDateTime deadline = parseDateTime(dateString);
+        LocalDateTime deadline = DateTimeValidator.parseDateTime(dateString, "deadline");
 
         Task task = new Deadline(description, deadline);
         tasks.add(task);
@@ -58,15 +63,11 @@ public class DeadlineCommand extends CommandBase {
     }
 
     private String parseDescription() {
-        validateParameterCount();
-
-        String[] parts = argument.split("/by");
-        if (parts.length == 1) {
-            throw new JohnException("The deadline date cannot be empty. Please use format: "
-                    + "deadline <description> /by <date>");
+        Matcher matcher = DEADLINE_PATTERN.matcher(argument.trim());
+        if (!matcher.matches()) {
+            throw new JohnException("Invalid format. Please use: deadline <description> /by <date>");
         }
-
-        String description = parts[0].trim();
+        String description = matcher.group(1).trim();
         if (description.isEmpty()) {
             String userName = john.util.UserNameUtil.getUserName();
             throw new JohnException(
@@ -76,23 +77,13 @@ public class DeadlineCommand extends CommandBase {
         return description;
     }
 
-    private void validateParameterCount() {
-        int byCount = (argument.length() - argument.replace("/by", "").length()) / 3;
-        if (byCount > 1) {
-            throw new JohnException("You have specified the /by parameter multiple times. "
-                    + "Please provide only one deadline date.");
-        }
-    }
-
     private String parseDateString() {
-        String[] parts = argument.split("/by");
-        String dateString = parts[1].trim();
-
+        Matcher matcher = DEADLINE_PATTERN.matcher(argument.trim());
+        if (!matcher.matches()) {
+            throw new JohnException("Invalid format. Please use: deadline <description> /by <date>");
+        }
+        String dateString = matcher.group(2).trim();
         DateTimeValidator.validateDateNotEmpty(dateString, "deadline");
         return dateString;
-    }
-
-    private LocalDateTime parseDateTime(String dateString) {
-        return DateTimeValidator.parseDateTime(dateString, "deadline");
     }
 }

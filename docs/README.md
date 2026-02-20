@@ -81,17 +81,19 @@ Expected output:
 ```
 Very well. I have added this task to your agenda:
     [T] [ ] read book
-You now have 1 tasks in your list, sir/madam.
+You now have 1 tasks in your list, sir/mdm.
 ```
 
 ### Adding a deadline: `deadline`
 
 Adds a deadline task with a due date to your task list.
 
-Format: `deadline DESCRIPTION /by DATE_TIME`
 
+**Format: `deadline DESCRIPTION /by DATE_TIME`**
+
+* The `/by` parameter must appear after the description, and the date/time must follow it.
 * The date and time must be in the format `d/M/yyyy HHmm`.
-* The `/by` parameter separates the description from the due date.
+* The order is strict: description first, then `/by`, then the date/time.
 
 Examples:
 * `deadline return book /by 2/12/2026 1800`
@@ -101,18 +103,20 @@ Expected output:
 ```
 Very well. I have added this task to your agenda:
     [D] [ ] return book (by: 2 Dec 2026, 06:00 PM)
-You now have 2 tasks in your list, sir/madam.
+You now have 2 tasks in your list, sir/mdm.
 ```
 
 ### Adding an event: `event`
 
 Adds an event task with a start and end date to your task list.
 
-Format: `event DESCRIPTION /from START_DATE_TIME /to END_DATE_TIME`
 
+**Format: `event DESCRIPTION /from START_DATE_TIME /to END_DATE_TIME`**
+
+* The `/from` and `/to` parameters must appear in this order, after the description.
 * The start and end dates must be in the format `d/M/yyyy HHmm`.
 * The end date must be after the start date.
-* The `/from` and `/to` parameters separate the description from the start and end dates.
+* The order is strict: description, `/from`, start date, `/to`, end date.
 
 Examples:
 * `event project meeting /from 2/12/2026 1400 /to 2/12/2026 1600`
@@ -122,7 +126,7 @@ Expected output:
 ```
 Very well. I have added this task to your agenda:
     [E] [ ] project meeting (from: 2 Dec 2026, 02:00 PM to: 2 Dec 2026, 04:00 PM)
-You now have 3 tasks in your list, sir/madam.
+You now have 3 tasks in your list, sir/mdm.
 ```
 
 ### Listing all tasks: `list`
@@ -240,7 +244,7 @@ Expected output:
 ```
 Very well. I have removed this task from your agenda:
     [D] [ ] return book (by: 2 Dec 2026, 06:00 PM)
-You now have 2 tasks remaining, sir/madam.
+You now have 2 tasks remaining, sir/mdm.
 ```
 
 ### Exiting the program: `bye`
@@ -254,7 +258,7 @@ Format: `bye`
 
 Expected output:
 ```
-Very good, sir/madam. Your tasks have been saved.
+Very good, sir/mdm. Your tasks have been saved.
 Until next time, I remain at your service.
 ```
 

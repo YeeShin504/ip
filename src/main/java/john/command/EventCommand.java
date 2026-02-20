@@ -1,6 +1,8 @@
 package john.command;
 
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import john.JohnException;
 import john.storage.Storage;
@@ -14,6 +16,9 @@ import john.util.DateTimeValidator;
  * Command to add an event task to the task list.
  */
 public class EventCommand extends CommandBase {
+    private static final Pattern EVENT_PATTERN = Pattern.compile(
+        "^(.*?)\\s*/from\\s*(.*?)\\s*/to\\s*(.*)$",
+        Pattern.CASE_INSENSITIVE);
     private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
     private static final String COUNT_MESSAGE = "You now have %d tasks in your list, %s.\n";
     private final String argument;
@@ -42,9 +47,9 @@ public class EventCommand extends CommandBase {
         validateArgumentNotEmpty();
         String description = parseDescription();
         String[] dateStrings = parseDateStrings();
-        LocalDateTime startDate = parseDateTime(dateStrings[0], "start");
-        LocalDateTime endDate = parseDateTime(dateStrings[1], "end");
-        validateDateOrder(startDate, endDate);
+        LocalDateTime startDate = DateTimeValidator.parseDateTime(dateStrings[0], "start");
+        LocalDateTime endDate = DateTimeValidator.parseDateTime(dateStrings[1], "end");
+        DateTimeValidator.validateDateOrder(startDate, endDate);
 
         Task task = new Event(description, startDate, endDate);
         tasks.add(task);
@@ -60,15 +65,11 @@ public class EventCommand extends CommandBase {
     }
 
     private String parseDescription() {
-        validateParameterCount("/from", 5, "start date");
-
-        String[] parts = argument.split("/from");
-        if (parts.length == 1) {
-            throw new JohnException("The start date of an event cannot be empty. "
-                    + "Please use format: event <description> /from <start> /to <end>");
+        Matcher matcher = EVENT_PATTERN.matcher(argument.trim());
+        if (!matcher.matches()) {
+            throw new JohnException("Invalid format. Please use: event <description> /from <start> /to <end>");
         }
-
-        String description = parts[0].trim();
+        String description = matcher.group(1).trim();
         if (description.isEmpty()) {
             String userName = john.util.UserNameUtil.getUserName();
             throw new JohnException("I apologize, " + userName + ", but the description of an event cannot be empty.");
@@ -77,47 +78,14 @@ public class EventCommand extends CommandBase {
     }
 
     private String[] parseDateStrings() {
-        String[] parts = argument.split("/from");
-        String datePart = parts[1].trim();
-
-        validateParameterCountInString(datePart, "/to", 3, "end date");
-
-        String[] dateParts = datePart.split("/to");
-        if (dateParts.length == 1) {
-            throw new JohnException("The end date of an event cannot be empty. "
-                    + "Please use format: event <description> /from <start> /to <end>");
+        Matcher matcher = EVENT_PATTERN.matcher(argument.trim());
+        if (!matcher.matches()) {
+            throw new JohnException("Invalid format. Please use: event <description> /from <start> /to <end>");
         }
-
-        String startString = dateParts[0].trim();
-        String endString = dateParts[1].trim();
-
+        String startString = matcher.group(2).trim();
+        String endString = matcher.group(3).trim();
         DateTimeValidator.validateDateNotEmpty(startString, "start");
         DateTimeValidator.validateDateNotEmpty(endString, "end");
-
         return new String[]{startString, endString};
-    }
-
-    private void validateParameterCount(String parameter, int paramLength, String paramName) {
-        int count = (argument.length() - argument.replace(parameter, "").length()) / paramLength;
-        if (count > 1) {
-            throw new JohnException("You have specified the " + parameter + " parameter multiple times. "
-                    + "Please provide only one " + paramName + ".");
-        }
-    }
-
-    private void validateParameterCountInString(String text, String parameter, int paramLength, String paramName) {
-        int count = (text.length() - text.replace(parameter, "").length()) / paramLength;
-        if (count > 1) {
-            throw new JohnException("You have specified the " + parameter + " parameter multiple times. "
-                    + "Please provide only one " + paramName + ".");
-        }
-    }
-
-    private LocalDateTime parseDateTime(String dateString, String dateType) {
-        return DateTimeValidator.parseDateTime(dateString, dateType);
-    }
-
-    private void validateDateOrder(LocalDateTime startDate, LocalDateTime endDate) {
-        DateTimeValidator.validateDateOrder(startDate, endDate);
     }
 }
