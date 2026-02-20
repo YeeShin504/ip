@@ -25,7 +25,11 @@ public class DateTimeValidatorTest {
         JohnException exception = assertThrows(JohnException.class, () -> {
             DateTimeValidator.parseDateTime("30/2/2024 1800", "deadline");
         });
-        assertEquals(true, exception.getMessage().contains("deadline date format is invalid"));
+        String msg = exception.getMessage();
+        assertEquals(true, msg.contains("Deadline date format is invalid."));
+        assertEquals(true, msg.contains("does not exist"));
+        assertEquals(true, msg.contains("30/2/2024 1800"));
+        assertEquals(true, msg.contains("^"));
     }
 
     @Test
@@ -33,7 +37,11 @@ public class DateTimeValidatorTest {
         JohnException exception = assertThrows(JohnException.class, () -> {
             DateTimeValidator.parseDateTime("invalid date", "start");
         });
-        assertEquals(true, exception.getMessage().contains("start date format is invalid"));
+        String msg = exception.getMessage();
+        assertEquals(true, msg.contains("Start date format is invalid."));
+        assertEquals(true, msg.contains("Please use the format: d/M/yyyy HHmm"));
+        assertEquals(true, msg.contains("invalid date"));
+        assertEquals(true, msg.contains("^"));
     }
 
     @Test

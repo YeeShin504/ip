@@ -67,15 +67,17 @@ public class DateTimeValidator {
                 .append(dateType.substring(1))
                 .append(" date format is invalid. ");
         if (e.getMessage().contains("Invalid date")) {
-            errorMsg.append("The date '").append(dateString).append("' does not exist (e.g., February 30th is invalid). ");
+            errorMsg.append("The date '")
+                    .append(dateString)
+                    .append("' does not exist (e.g., February 30th is invalid). ");
         } else {
             errorMsg.append("Please use the format: d/M/yyyy HHmm (e.g., 25/12/2024 1800). ");
         }
         int errorIndex = e.getErrorIndex();
         if (errorIndex >= 0 && errorIndex < dateString.length()) {
             errorMsg.append("\nError here: ").append(dateString).append("\n");
-            int ERROR_OFFSET = ("Error here: ").length();
-            for (int i = 0; i < ERROR_OFFSET + errorIndex; i++) {
+            int errorOffset = ("Error here: ").length();
+            for (int i = 0; i < errorOffset + errorIndex; i++) {
                 errorMsg.append(' ');
             }
             errorMsg.append("^\n\n");
