@@ -11,7 +11,7 @@ import john.ui.Ui;
  */
 public class DeleteCommand extends CommandBase {
     private static final String REMOVED_MESSAGE = "Very well. I have removed this task from your agenda:\n    %s\n";
-    private static final String COUNT_MESSAGE = "You now have %d tasks remaining, sir/madam.\n";
+    private static final String COUNT_MESSAGE = "You now have %d tasks remaining, %s.\n";
     private final String taskNum;
 
     /**
@@ -54,6 +54,7 @@ public class DeleteCommand extends CommandBase {
         Task task = tasks.get(taskIndex);
         tasks.remove(task);
         storage.saveTasks(tasks);
-        return String.format(REMOVED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
+        String userName = john.util.UserNameUtil.getUserName();
+        return String.format(REMOVED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size(), userName);
     }
 }

@@ -62,7 +62,8 @@ public class Ui {
      * Shows an error message when loading tasks fails.
      */
     public void showLoadingError() {
-        System.out.println("I apologize, sir/madam. There was an error retrieving your tasks from storage.");
+        String userName = john.util.UserNameUtil.getUserName();
+        System.out.println("I apologize, " + userName + ". There was an error retrieving your tasks from storage.");
     }
 
     /**

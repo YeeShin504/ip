@@ -43,6 +43,7 @@ class AddCommandTest {
         assertEquals(1, tasks.size());
         assertTrue(response.contains("Very well. I have added this task to your agenda:"));
         assertTrue(response.contains("[T] [ ] read book"));
-        assertTrue(response.contains("You now have 1 tasks in your list, sir/madam."));
+        String userName = john.util.UserNameUtil.getUserName();
+        assertTrue(response.contains("You now have 1 tasks in your list, " + userName + "."));
     }
 }

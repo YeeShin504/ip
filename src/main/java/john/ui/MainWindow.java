@@ -12,11 +12,16 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import john.John;
 import john.JohnException;
+import john.util.UserNameUtil;
+
 
 /**
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
+    private John john;
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/UserProfilePic.png"));
+    private Image johnImage = new Image(this.getClass().getResourceAsStream("/images/JohnProfilePic.png"));
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -26,18 +31,9 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private John john;
-
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/UserProfilePic.png"));
-    private Image johnImage = new Image(this.getClass().getResourceAsStream("/images/JohnProfilePic.png"));
-
-    @FXML
-    public void initialize() {
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-    }
 
     /**
-     * Injects the John instance and shows welcome message
+     * Injects the John instance and shows the welcome message.
      *
      * @param john The John instance
      */
@@ -50,9 +46,19 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
+     * Sets the username in the input prompt.
+     */
+    @FXML
+    public void initialize() {
+        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        String userName = UserNameUtil.getUserName();
+        userInput.setPromptText(userName + ", how may I help you?");
+    }
+
+    /**
      * Creates two dialog boxes, one echoing user input and the other containing
-     * John's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * John's reply and then appends them to the dialog container.
+     * Clears the user input after processing.
      */
     @FXML
     private void handleUserInput() {

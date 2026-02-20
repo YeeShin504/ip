@@ -15,7 +15,7 @@
     <children>
         <TextField fx:id="userInput"
                    onAction="#handleUserInput"
-                   promptText="Sir/Mdm, how may I help you?"
+                   promptText="How may I help you?"
                    style="-fx-font-family: 'Consolas', 'Monaco', 'Courier New', monospace; -fx-font-size: 13px; -fx-background-color: #ffffff; -fx-border-color: #d0d0d0; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-padding: 8px 12px;"
                    prefHeight="40.0"
                    AnchorPane.bottomAnchor="8.0"

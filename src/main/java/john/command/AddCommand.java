@@ -10,7 +10,7 @@ import john.ui.Ui;
  */
 public class AddCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
-    private static final String COUNT_MESSAGE = "You now have %d tasks in your list, sir/madam.\n";
+    private static final String COUNT_MESSAGE = "You now have %d tasks in your list, %s.\n";
     private final Task task;
 
     /**
@@ -34,6 +34,7 @@ public class AddCommand extends CommandBase {
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.add(task);
         storage.saveTasks(tasks);
-        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
+        String userName = john.util.UserNameUtil.getUserName();
+        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size(), userName);
     }
 }

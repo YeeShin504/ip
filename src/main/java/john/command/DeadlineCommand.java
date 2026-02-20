@@ -16,7 +16,7 @@ import john.util.DateTimeValidator;
  */
 public class DeadlineCommand extends CommandBase {
     private static final String ADDED_MESSAGE = "Very well. I have added this task to your agenda:\n    %s\n";
-    private static final String COUNT_MESSAGE = "You now have %d tasks in your list, sir/madam.\n";
+    private static final String COUNT_MESSAGE = "You now have %d tasks in your list, %s.\n";
     private final String argument;
 
     /**
@@ -47,7 +47,8 @@ public class DeadlineCommand extends CommandBase {
         Task task = new Deadline(description, deadline);
         tasks.add(task);
         storage.saveTasks(tasks);
-        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size());
+        String userName = john.util.UserNameUtil.getUserName();
+        return String.format(ADDED_MESSAGE, task) + String.format(COUNT_MESSAGE, tasks.size(), userName);
     }
 
     private void validateArgumentNotEmpty() {
@@ -67,7 +68,10 @@ public class DeadlineCommand extends CommandBase {
 
         String description = parts[0].trim();
         if (description.isEmpty()) {
-            throw new JohnException("I apologize, sir/madam, but the description of a deadline cannot be empty.");
+            String userName = john.util.UserNameUtil.getUserName();
+            throw new JohnException(
+                "I apologize, " + userName + ", but the description of a deadline cannot be empty."
+            );
         }
         return description;
     }

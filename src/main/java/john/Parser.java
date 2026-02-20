@@ -68,6 +68,7 @@ public class Parser {
         default:
             break;
         }
-        throw new JohnException("I beg your pardon, sir/madam, but I do not understand: " + input);
+        String userName = john.util.UserNameUtil.getUserName();
+        throw new JohnException("I beg your pardon, " + userName + ", but I do not understand: " + input);
     }
 }

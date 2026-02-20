@@ -19,7 +19,11 @@ public class ExitCommand extends CommandBase {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         storage.saveTasks(tasks);
-        return "Very good, sir/madam. Your tasks have been saved.\nUntil next time, I remain at your service.";
+        String userName = john.util.UserNameUtil.getUserName();
+        return String.format(
+            "Very good, %s. Your tasks have been saved.\nUntil next time, I remain at your service.",
+            userName
+        );
     }
 
     /**
